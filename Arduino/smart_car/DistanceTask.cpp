@@ -1,6 +1,6 @@
-#include "DistanceTask.h"
 #include "Arduino.h"
 #include "config.h"
+#include "DistanceTask.h"
 
 DistanceTask::DistanceTask(int echoPin, int triggerPin, Envirnoment* env){
 	this->echoPin = echoPin;

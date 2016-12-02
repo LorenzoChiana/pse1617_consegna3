@@ -41,7 +41,7 @@
 #include "LedTask.h"
 #include "Environment.h"
 
-enum {MOVEMENT, PARK, OFF} State;
+typedef enum {MOVEMENT, PARK, OFF} State;
 
 #endif
 

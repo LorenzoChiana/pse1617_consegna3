@@ -1,13 +1,13 @@
 #include "config.h"
 
 Scheduler sched;
-Envirnoment *env;
+Environment *env;
 
 void setup() {
   Serial.begin(9600);
 
-  Envirnoment = new Envirnoment();
-  Envirnoment->init();
+  Environment = new Environment();
+  Environment->init();
 
   sched.init(CLOCK);
 
