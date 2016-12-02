@@ -8,6 +8,7 @@ class Envirnoment {
 	bool touch;
 	
 public:
+
 	void setDistance(float);
 	float getDistance();
 
