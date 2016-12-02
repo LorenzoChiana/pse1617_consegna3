@@ -15,13 +15,17 @@ void DistanceTask::init(int period){
 }
 
 void DistanceTask::tick(){
-	State currentState = this->env.getState();
+	State currentState = env.getState();
 	switch(currentState){
 		case OFF:
-			break;
+			//Non rilevare
+		break;
 		case MOVING:
-			break;
+			//Rileva la distanza
+			env->setDistance(proximitySensor->getDistance());
+		break;
 		case PARKING:
-			break;
+			//Non rilevare 
+		break;
 	}
 }

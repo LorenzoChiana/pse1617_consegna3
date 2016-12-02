@@ -7,20 +7,15 @@
 #define __CONFIG__
 
 #define T1_PIN 10
-#define T2_PIN 11
 #define L1_PIN 4
 #define L2_PIN 5
-#define L3_PIN 6
 #define ECHO_PIN 7
 #define TRIG_PIN 8
-#define PIR_PIN 9
 
-#define DMIN_WC 0.2
-#define DMAX_WC 0.5
+#define DMIN 0.2
+#define DMAX 0.5
 
 #define INTENSITY 5
-
-#define CORRECTION_BOUNCE 5
 
 #define TMAX 20000
 
@@ -43,7 +38,8 @@
 #define CLOCK 30
 
 #include "DistanceTask.h"
-#include "Environment.h"
+#include "LedTask.h"
+#include "Envirnoment.h"
 
 enum {MOVEMENT, PARK, OFF} State;
 

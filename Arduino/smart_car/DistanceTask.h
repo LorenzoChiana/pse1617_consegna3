@@ -3,7 +3,7 @@
 
 #include "Task.h"
 #include "Sonar.h"
-#include "GlobalState.h"
+#include "Environment.h"
 
 class DistanceTask: public Task {
 	int echoPin, triggerPin;
