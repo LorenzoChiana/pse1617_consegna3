@@ -1,7 +1,5 @@
-#include "Environment.h"
 #include "Arduino.h"
-
-Environment::Environment(){}
+#include "Environment.h"
 
 void Environment::init(){
 	this->setDistance(0.0);

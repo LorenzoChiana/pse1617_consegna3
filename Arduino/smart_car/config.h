@@ -37,11 +37,10 @@
 
 #define CLOCK 30
 
-#include "DistanceTask.h"
-#include "LedTask.h"
-#include "Environment.h"
 
 typedef enum {MOVEMENT, PARK, OFF} State;
+
+#include "Environment.h"
 
 #endif
 

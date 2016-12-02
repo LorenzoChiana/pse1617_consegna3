@@ -10,7 +10,8 @@ class Environment {
 	bool touch;
 	
 public:
-
+  void init();
+  
 	void setDistance(float);
 	float getDistance();
 
@@ -18,7 +19,7 @@ public:
 	bool getTouched();
 
 	State getState();
-	void setState(State);
-}
+	void setState(State value);
+};
 
 #endif

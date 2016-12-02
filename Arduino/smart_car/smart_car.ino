@@ -1,13 +1,18 @@
 #include "config.h"
 
+#include "DistanceTask.h"
+#include "LedTask.h"
+#include "Scheduler.h"
+#include "Task.h"
+
 Scheduler sched;
 Environment *env;
 
 void setup() {
   Serial.begin(9600);
 
-  Environment = new Environment();
-  Environment->init();
+  Environment* env = new Environment();
+  env->init();
 
   sched.init(CLOCK);
 
