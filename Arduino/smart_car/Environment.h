@@ -1,7 +1,7 @@
 #ifdef __ENVIRONMENT__
 #define __ENVIRONMENT__
 
-class Envirnoment {
+class Environment {
 	State s; 
 
 	float distance;
@@ -18,3 +18,5 @@ public:
 	State getState();
 	void setState(State);
 }
+
+#ifdef
