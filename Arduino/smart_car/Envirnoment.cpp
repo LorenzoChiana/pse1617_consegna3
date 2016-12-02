@@ -11,9 +11,13 @@ void Envirnoment::init(){
 void Envirnoment::setDistance(float value){
 	this->distance = value;
 }
-float getDistance(){
+float Envirnoment::getDistance(){
 	return this->distance;
 }
 
-void setTouched(bool);
-bool getTouched();
+void Envirnoment::setTouched(bool value){
+	this->touch = value;
+}
+bool Envirnoment::getTouched(){
+	return this->touch;
+}
