@@ -1,5 +1,7 @@
-#ifdef __ENVIRONMENT__
+#ifndef __ENVIRONMENT__
 #define __ENVIRONMENT__
+
+#include "config.h"
 
 class Environment {
 	State s; 
@@ -19,4 +21,4 @@ public:
 	void setState(State);
 }
 
-#ifdef
+#endif
