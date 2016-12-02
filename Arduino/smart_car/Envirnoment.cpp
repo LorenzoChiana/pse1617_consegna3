@@ -6,6 +6,7 @@ Envirnoment::Envirnoment(){}
 void Envirnoment::init(){
 	this->setDistance(0.0);
 	this->setTouched(false);
+	this->setState(OFF);
 }
 
 void Envirnoment::setDistance(float value){
@@ -20,4 +21,12 @@ void Envirnoment::setTouched(bool value){
 }
 bool Envirnoment::getTouched(){
 	return this->touch;
+}
+
+void Envirnoment::setState(State value){
+	this->s = value;
+}
+
+State Envirnoment::getState(){
+	return this->s;
 }

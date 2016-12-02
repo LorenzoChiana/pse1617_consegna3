@@ -1,18 +1,18 @@
-#ifndef __DETECTPRESENCETASK__
-#define __DETECTPRESENCETASK__
+#ifndef __DISTANCETASK__
+#define __DISTANCETASK__
 
 #include "Task.h"
 #include "Sonar.h"
 #include "GlobalState.h"
 
-class DetectPresenceTask: public Task {
+class DistanceTask: public Task {
 	int echoPin, triggerPin;
 	bool isNear;
 
 	Sonar* proximitySensor;
-	GlobalState* Global;
+	Environment* env;
 public:
-	DetectPresenceTask(int echoPin, int triggerPin, GlobalState* Global);  
+	DistanceTask(int echoPin, int triggerPin, Environment* env);  
 	void init(int period);  
 	void tick();
 };

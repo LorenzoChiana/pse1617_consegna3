@@ -42,19 +42,10 @@
 
 #define CLOCK 30
 
-#include "AlarmTask.h"
-#include "GlobalState.h"
-#include "CleaningTask.h"
-#include "DetectMotionTask.h"
-#include "DetectPresenceTask.h"
-#include "FadeTask.h"
-#include "IlluminateTask.h"
-#include "LedCleaningTask.h"
-#include "MsgTask.h"
-#include "Scheduler.h"
-#include "InputAlarmTask.h"
-#include "StopAlarmTask.h"
-#include "AlarmLedTask.h"
+#include "DistanceTask.h"
+#include "Environment.h"
+
+enum {MOVEMENT, PARK, OFF} State;
 
 #endif
 
