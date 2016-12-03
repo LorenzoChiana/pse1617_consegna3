@@ -5,7 +5,6 @@
 #include "LedTask.h"
 #include "Scheduler.h"
 
-
 Scheduler sched;
 Environment *env;
 

@@ -11,9 +11,9 @@ PressionTask::PressionTask(int pin, int servoPin, Environment* env){
 }
 
 void PressionTask::init(int period){
-	Task::init(period);
-	button = new ButtonImpl(this->pin);
-	servo.attach(this->servoPin);   
+	Task::init(period);	
+	servo.attach(this->servoPin);  
+	button = new ButtonImpl(this->pin); 
 }
 
 void PressionTask::tick(){
@@ -26,8 +26,11 @@ void PressionTask::tick(){
 		break;
 		case MOVEMENT:
 			//Messaggio “contatto”
-			//Asepttare risposta di contatto con indicazioni sul motorino 
-			//setAngle(angle);
+			this->env->getChannel()->sendMsg("Contatto");
+			if (this->env->getChannel()->isMsgAvalible()){
+				//Asepttare risposta di contatto con indicazioni sul motorino 
+			}
+			setAngle(angle);
 		break;
 		case PARK:
 			//Accendi L2 per due secondi
@@ -52,6 +55,5 @@ void PressionTask::tick(){
 void PressionTask::setAngle(int angle){
 	angle = angle>180?180:angle;
 	angle = angle<0?0:angle;
-
 	servo.write(angle);
 }	

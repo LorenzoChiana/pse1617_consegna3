@@ -1,11 +1,14 @@
 #include "Arduino.h"
 #include "config.h"
 #include "DistanceTask.h"
+#include <stdio.h>
+#include <math.h>
 
 DistanceTask::DistanceTask(int echoPin, int triggerPin, Environment* env){
 	this->echoPin = echoPin;
 	this->triggerPin = triggerPin;
 	this->env = env;
+	this->msg = "Presenza veicolo - distanza: d"
 }
 
 void DistanceTask::init(int period){
@@ -15,8 +18,9 @@ void DistanceTask::init(int period){
 }
 
 void DistanceTask::tick(){
-  float currentDistance;
+  	float currentDistance;
 	State currentState = env->getState();
+	char* distanceString;
 	switch(currentState){
 		case OFF:
 			//Non rilevare
@@ -28,6 +32,7 @@ void DistanceTask::tick(){
 
 			if (currentDistance > DMAX){
 				//Manda messaggio con scritto “Presenza veicolo - distanza: d”
+				this->env->getChannel()->sendMsg("");
 			}
 		break;
 		case PARK:

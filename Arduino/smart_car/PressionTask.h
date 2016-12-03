@@ -4,12 +4,12 @@
 #include "Task.h"
 #include "Button.h"
 #include "Environment.h"
-#include <Servo.h>
+#include "ServoEx.h"
 
 class PressionTask: public Task {
 	int pin, servoPin;	
 	Button* button;
-	Servo servo;
+	ServoEx servo;
 
 	long currentTime, initialTime;
 
