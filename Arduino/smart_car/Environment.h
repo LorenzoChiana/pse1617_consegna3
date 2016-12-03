@@ -2,16 +2,19 @@
 #define __ENVIRONMENT__
 
 #include "config.h"
+#include "MsgService.h"
 
 class Environment {
 	State s; 
 
 	float distance;
 	bool touch;
-	
+
+	MsgService* channel;
+	void initChannel(int RXpin, int TXpin);	
 public:
-  void init();
-  
+	void init(int RXpin, int TXpin);
+
 	void setDistance(float);
 	float getDistance();
 
@@ -20,6 +23,8 @@ public:
 
 	State getState();
 	void setState(State value);
+
+	MsgService* getChannel();
 };
 
 #endif

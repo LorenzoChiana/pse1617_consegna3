@@ -1,9 +1,10 @@
 #include "config.h"
 
+#include "Task.h"
 #include "DistanceTask.h"
 #include "LedTask.h"
 #include "Scheduler.h"
-#include "Task.h"
+
 
 Scheduler sched;
 Environment *env;
@@ -12,7 +13,7 @@ void setup() {
   Serial.begin(9600);
 
   Environment* env = new Environment();
-  env->init();
+  env->init(PIN_TX, PIN_TX);
 
   sched.init(CLOCK);
 

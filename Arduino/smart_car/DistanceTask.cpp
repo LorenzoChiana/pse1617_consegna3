@@ -15,14 +15,20 @@ void DistanceTask::init(int period){
 }
 
 void DistanceTask::tick(){
+  float currentDistance;
 	State currentState = env->getState();
 	switch(currentState){
 		case OFF:
 			//Non rilevare
 		break;
 		case MOVEMENT:
-			//Rileva la distanza
-			env->setDistance(proximitySensor->getDistance());
+			//Rileva la distanza		
+			currentDistance = proximitySensor->getDistance();
+			env->setDistance(currentDistance);
+
+			if (currentDistance > DMAX){
+				//Manda messaggio con scritto “Presenza veicolo - distanza: d”
+			}
 		break;
 		case PARK:
 			//Non rilevare 

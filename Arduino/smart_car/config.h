@@ -12,6 +12,9 @@
 #define ECHO_PIN 7
 #define TRIG_PIN 8
 
+#define PIN_TX 3
+#define PIN_RX 4
+
 #define DMIN 0.2
 #define DMAX 0.5
 

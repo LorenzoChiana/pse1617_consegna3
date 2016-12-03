@@ -26,18 +26,20 @@ void LedTask::tick(){
 		break;
 		case MOVEMENT:
 			l1->switchOn();
-			currentDistance = env->getDistance();
-			if (currentDistance > DMAX){
-				//Manda messaggio con scritto “Presenza veicolo - distanza: d”
-			}
-			if (currentDistance < DMIN){
+			if (env->getDistance() < DMIN){
 				l2->switchOn();
 			}
 		break;
 		case PARK:
-			//L1 deve pulsare 
+			//L1 deve pulsare
+			 
 			//Se è stato premuto attiva due secondi L2 e invia messaggio di posizione geografica + mail se c'è notifica
-
+			if (env->getTouched()){
+				l2->switchOn();
+			}
+			else {
+				l2->switchOff();
+			}
 		break;
 	}
 }
