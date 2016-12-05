@@ -6,6 +6,8 @@ void Environment::init(int TXpin, int RXpin){
 	this->setTouched(false);
 	this->setState(OFF);
 	this->initChannel(TXpin, RXpin);
+	lastMsg = "";
+	avalible = false;
 }
 
 void Environment::initChannel(int TXpin, int RXpin){
@@ -38,3 +40,21 @@ State Environment::getState(){
 MsgService* Environment::getChannel(){
 	return this->channel;
 }
+
+void Environment::updateLastMsg(String msg){
+	this->lastMsg = msg;
+}
+
+String Environment::getLastMsg(){
+	return this->lastMsg;
+}
+
+bool Environment::isMsgAvalible(){
+	return this->avalible;
+}
+
+void Environment::setMsgAvalible(bool val){
+	this->avalible = val;
+}
+
+

@@ -45,18 +45,17 @@ void PressionTask::tick(){
 				firstPress = true;
 			}
 			//Accetto i messaggi in arrivo fino a quando viene mandato fine
-			if (this->env->getChannel()->isMsgAvailable() && waitingMsg){
+			if (this->env->isMsgAvalible() && waitingMsg){
 				//Asepttare risposta di contatto con indicazioni sul motorino 
-				Msg* msg = this->env->getChannel()->receiveMsg();    
-    			if (msg->getContent() == "fine"){ 
+				  
+    			if (env->getLastMsg() == "fine"){ 
     				waitingMsg = false;      			
        			} 
        			char* contenuto ;
-       			msg->getContent().toCharArray(contenuto, sizeof(msg->getContent()));
+       			env->getLastMsg().toCharArray(contenuto, sizeof(env->getLastMsg()));
        			if (is_int(contenuto)) {
-       				setAngle(msg->getContent().toInt());
+       				setAngle(env->getLastMsg().toInt());
        			}
-       			delete msg;
        			waitingMsg = false;
     		}	
 		break;

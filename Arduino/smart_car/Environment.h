@@ -12,6 +12,9 @@ class Environment {
 
 	MsgService* channel;
 	void initChannel(int RXpin, int TXpin);	
+
+	String lastMsg;
+	bool avalible;
 public:
 	void init(int RXpin, int TXpin);
 
@@ -25,6 +28,11 @@ public:
 	void setState(State value);
 
 	MsgService* getChannel();
+
+	void updateLastMsg(String msg);
+	String getLastMsg();
+	bool isMsgAvalible();
+	void setMsgAvalible(bool val);
 };
 
 #endif
