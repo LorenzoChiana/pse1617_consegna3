@@ -12,6 +12,8 @@
 #define ECHO_PIN 7
 #define TRIG_PIN 8
 
+#define SERVO_PIN 9
+
 #define PIN_TX 3
 #define PIN_RX 4
 
