@@ -8,7 +8,6 @@ DistanceTask::DistanceTask(int echoPin, int triggerPin, Environment* env){
 	this->echoPin = echoPin;
 	this->triggerPin = triggerPin;
 	this->env = env;
-	this->msg = "Presenza veicolo - distanza: d"
 }
 
 void DistanceTask::init(int period){
@@ -31,8 +30,12 @@ void DistanceTask::tick(){
 			env->setDistance(currentDistance);
 
 			if (currentDistance > DMAX){
+				String d = String(currentDistance,3);
+				String text = String("Presenza veicolo - distanza: " + d);
 				//Manda messaggio con scritto “Presenza veicolo - distanza: d”
-				this->env->getChannel()->sendMsg("");
+        		Msg* temp = new Msg(text);
+				this->env->getChannel()->sendMsg(*temp);
+				delete temp;
 			}
 		break;
 		case PARK:
@@ -40,3 +43,4 @@ void DistanceTask::tick(){
 		break;
 	}
 }
+

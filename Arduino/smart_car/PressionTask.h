@@ -4,22 +4,24 @@
 #include "Task.h"
 #include "Button.h"
 #include "Environment.h"
-#include "ServoEx.h"
+//#include "ServoEx.h"
 
 class PressionTask: public Task {
 	int pin, servoPin;	
 	Button* button;
-	ServoEx servo;
-
+	bool firstPress, waitingMsg;
+	//ServoEx servo;
 	long currentTime, initialTime;
-
 	Environment* env;
 
 	void setAngle(int angle);
+	bool is_int(char const* p);
+	
 public:
 	PressionTask(int pin, int servoPin, Environment* env);  
 	void init(int period);  
 	void tick();
+
 };
 
 #endif

@@ -3,6 +3,8 @@
 #include "Task.h"
 #include "DistanceTask.h"
 #include "LedTask.h"
+#include "PressionTask.h"
+#include "ControllerTask.h"
 #include "Scheduler.h"
 
 Scheduler sched;
@@ -16,13 +18,21 @@ void setup() {
 
   sched.init(CLOCK);
 
+  Task* controllerTask = new ControllerTask(env);
+  controllerTask->init(3*CLOCK);
+  sched.addTask(controllerTask);
+
   Task* distanceTask = new DistanceTask(ECHO_PIN, TRIG_PIN, env);
   distanceTask->init(3*CLOCK);
   sched.addTask(distanceTask);
 
   Task* ledTask = new LedTask(L1_PIN, L2_PIN, env);
   distanceTask->init(3*CLOCK);
-  sched.addTask(distanceTask);
+  sched.addTask(ledTask);
+
+  Task* pressionTask = new PressionTask(T1_PIN, SERVO_PIN, env);
+  pressionTask->init(3*CLOCK);
+  sched.addTask(pressionTask);
 
   Task* pressionTask = new PressionTask(T1_PIN, SERVO_PIN, env);
   distanceTask->init(3*CLOCK);
