@@ -15,6 +15,8 @@
 #define PIN_TX 3
 #define PIN_RX 4
 
+#define SERVO_PIN 9
+
 #define DMIN 0.2
 #define DMAX 0.5
 

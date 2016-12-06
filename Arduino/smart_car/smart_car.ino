@@ -24,6 +24,10 @@ void setup() {
   distanceTask->init(3*CLOCK);
   sched.addTask(distanceTask);
 
+  Task* pressionTask = new PressionTask(T1_PIN, SERVO_PIN, env);
+  distanceTask->init(3*CLOCK);
+  sched.addTask(distanceTask);
+
 }
 
 void loop() {
