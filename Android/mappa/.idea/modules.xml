@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/PSE-AndroidArduinoClient.iml" filepath="$PROJECT_DIR$/PSE-AndroidArduinoClient.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mappa.iml" filepath="$PROJECT_DIR$/mappa.iml" />
     </modules>
   </component>
 </project>

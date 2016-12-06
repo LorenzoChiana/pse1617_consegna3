@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">PSE1617_consegna3</string>
+
+    <string name="btUnavailableAlertTitle">Warning</string>
+    <string name="btUnavailableAlertMessage">Bluetooth unavailable on this device</string>
+    <string name="btUnavailableAlertBtnText">Close APP</string>
+</resources>
