@@ -1,8 +1,6 @@
 #include "Arduino.h"
 #include "config.h"
 #include "ControllerTask.h"
-#include <stdio.h>
-#include <math.h>
 
 ControllerTask::ControllerTask(Environment* env){
 	this->env = env;
@@ -18,13 +16,13 @@ void ControllerTask::tick(){
 		env->updateLastMsg(env->getChannel()->receiveMsg()->getContent());
   		env->setMsgAvalible(true);
   		
-		if (env->getLastMsg() == "park"){ 
+		if (env->getLastMsg() == "Spenta in parcheggio"){ 
 			env->setState(PARK);      			
 		} 
-		if (env->getLastMsg() == "movement"){ 
+		if (env->getLastMsg() == "Accesa in movimento"){ 
 			env->setState(MOVEMENT);      			
 		} 
-		if (env->getLastMsg() == "off"){ 
+		if (env->getLastMsg() == "Spenta non in parcheggio"){ 
 			env->setState(OFF);      			
 		} 
 	} else {
