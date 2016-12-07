@@ -28,7 +28,7 @@ public class SendEmailActivity extends Activity {
 
         String to = textTo.getText().toString();
         String subject = C.EMAIL_CC;
-        String message = "hei ciao";
+        String message = "hei ciao ;)";
 
         Intent email = new Intent(Intent.ACTION_SEND);
         email.putExtra(Intent.EXTRA_EMAIL, new String[]{ to});
