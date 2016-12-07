@@ -4,13 +4,13 @@
 #include "Task.h"
 #include "Button.h"
 #include "Environment.h"
-//#include "ServoEx.h"
+#include "ServoTimer2.h"
 
 class PressionTask: public Task {
 	int pin, servoPin;	
 	Button* button;
 	bool firstPress, waitingMsg;
-	//ServoEx servo;
+	ServoTimer2 servo;
 	long currentTime, initialTime;
 	Environment* env;
 

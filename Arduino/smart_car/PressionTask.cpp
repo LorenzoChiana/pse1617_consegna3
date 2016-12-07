@@ -2,6 +2,7 @@
 #include "config.h"
 #include "ButtonImpl.h"
 #include "PressionTask.h"
+#include "ServoTimer2.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -17,7 +18,7 @@ PressionTask::PressionTask(int pin, int servoPin, Environment* env){
 
 void PressionTask::init(int period){
 	Task::init(period);	
-	//servo.attach(this->servoPin);  
+	servo.attach(this->servoPin);  
 	button = new ButtonImpl(this->pin); 
 }
 
@@ -85,7 +86,7 @@ void PressionTask::tick(){
 void PressionTask::setAngle(int angle){
 	angle = angle>180?180:angle;
 	angle = angle<0?0:angle;
-	//servo.write(angle);
+	servo.write(angle);
 }	
 bool PressionTask::is_int(char const* p)
 {
