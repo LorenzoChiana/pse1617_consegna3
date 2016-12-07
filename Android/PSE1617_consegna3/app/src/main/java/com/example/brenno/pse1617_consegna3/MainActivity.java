@@ -20,8 +20,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.brenno.pse1617_consegna3.bt.BluetoothConnectionManager;
@@ -186,6 +188,9 @@ public class MainActivity extends Activity {
     }
 
     private void initUI() {
+        Switch notifica = (Switch) findViewById(R.id.switchNotifica);
+        notifica.setOnCheckedChangeListener(new MySwitchOnClickListener(this));
+        hideMailUI();
         this.arraySpinner = new String[]{
                 "Spenta non in parcheggio", "Spenta in parcheggio", "Accesa in movimento"
         };
@@ -207,6 +212,19 @@ public class MainActivity extends Activity {
 
     }
 
+    void hideMailUI() {
+        TextView label = (TextView) findViewById(R.id.textEmail);
+        label.setVisibility(View.GONE);
+        EditText edit = (EditText) findViewById(R.id.editEmail);
+        edit.setVisibility(View.GONE);
+    }
+
+    void showMailUI() {
+        TextView label = (TextView) findViewById(R.id.textEmail);
+        label.setVisibility(View.VISIBLE);
+        EditText edit = (EditText) findViewById(R.id.editEmail);
+        edit.setVisibility(View.VISIBLE);
+    }
 
     private void showBluetoothUnavailableAlert() {
         AlertDialog dialog = new AlertDialog.Builder(this)
