@@ -20,14 +20,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.net.Uri;
 
-import com.example.brenno.pse1617_consegna3.bt.*;
+import com.example.brenno.pse1617_consegna3.bt.BluetoothConnectionManager;
+import com.example.brenno.pse1617_consegna3.bt.BluetoothConnectionTask;
+import com.example.brenno.pse1617_consegna3.bt.BluetoothUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.UUID;
@@ -53,10 +52,6 @@ public class MainActivity extends Activity {
         locationListener = new MyLocationListener(this);
         initUI();
         uiHandler = new MainActivityHandler(this, new WeakReference<>(this));
-        EditText TO = (EditText) findViewById(R.id.editEmail);
-        TO.setText("lorenzo.chiana@gmail.com");
-        new SendEmailActivity();
-        /*sendEmail();*/
     }
 
     @Override
@@ -192,7 +187,7 @@ public class MainActivity extends Activity {
 
     private void initUI() {
         this.arraySpinner = new String[]{
-                "Accesa in movimento", "Spenta in parcheggio", "Spenta non in parcheggio"
+                "Spenta non in parcheggio", "Spenta in parcheggio", "Accesa in movimento"
         };
 
         final Spinner spinner = (Spinner) findViewById(R.id.spinnerMod);
@@ -243,28 +238,6 @@ public class MainActivity extends Activity {
         textContatto.setVisibility(View.VISIBLE);
     }
 
-   /* protected void sendEmail() {
-        Log.i("Send email", "");
-
-        Intent emailIntent = new Intent(Intent.ACTION_SEND);
-        emailIntent.setData(Uri.parse("mailto:"));
-        emailIntent.setType("text/plain");
-
-        EditText TO = (EditText) findViewById(R.id.editEmail);
-        emailIntent.putExtra(Intent.EXTRA_EMAIL, TO.getText());
-        emailIntent.putExtra(Intent.EXTRA_CC, C.EMAIL_CC);
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Your subject");
-        emailIntent.putExtra(Intent.EXTRA_TEXT, "Email message goes here");
-
-        try {
-            startActivity(Intent.createChooser(emailIntent, "Send mail..."));
-            finish();
-        } catch (android.content.ActivityNotFoundException ex) {
-            Toast.makeText(MainActivity.this,
-                    "There is no email client installed.", Toast.LENGTH_SHORT).show();
-        }
-    }
-*/
     public static MainActivityHandler getHandler() {
         return uiHandler;
     }
