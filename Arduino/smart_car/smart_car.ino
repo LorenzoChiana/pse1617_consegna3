@@ -14,7 +14,7 @@ void setup() {
   Serial.begin(9600);
 
   Environment* env = new Environment();
-  env->init(PIN_TX, PIN_TX);
+  env->init(PIN_RX, PIN_TX);
 
   sched.init(CLOCK);
 

@@ -1,17 +1,17 @@
 #include "Arduino.h"
 #include "Environment.h"
 
-void Environment::init(int TXpin, int RXpin){
+void Environment::init(int RXpin, int TXpin){
 	this->setDistance(0.0);
 	this->setTouched(false);
 	this->setState(OFF);
-	this->initChannel(TXpin, RXpin);
+	this->initChannel(RXpin, TXpin);
 	lastMsg = "";
 	avalible = false;
 }
 
-void Environment::initChannel(int TXpin, int RXpin){
-	this->channel = new MsgService(TXpin, RXpin);
+void Environment::initChannel(int RXpin, int TXpin){
+	this->channel = new MsgService(RXpin, TXpin);
 	this->channel->init();
 }
 
