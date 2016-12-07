@@ -7,7 +7,7 @@
 #define __CONFIG__
 
 #define T1_PIN 11
-#define L1_PIN 2
+#define L1_PIN 5
 #define L2_PIN 6
 #define ECHO_PIN 7
 #define TRIG_PIN 8
