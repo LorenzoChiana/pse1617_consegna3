@@ -11,13 +11,16 @@ void ControllerTask::init(int period){
 }
 
 void ControllerTask::tick(){
+	
 	if (this->env->getChannel()->isMsgAvailable()){
-		
+
 		env->updateLastMsg(env->getChannel()->receiveMsg()->getContent());
+		
   		env->setMsgAvalible(true);
-  		
+  		 
+  	
 		if (env->getLastMsg() == "Spenta in parcheggio"){ 
-			env->setState(PARK);      			
+			env->setState(PARK);  		
 		} 
 		if (env->getLastMsg() == "Accesa in movimento"){ 
 			env->setState(MOVEMENT);      			
@@ -25,6 +28,7 @@ void ControllerTask::tick(){
 		if (env->getLastMsg() == "Spenta non in parcheggio"){ 
 			env->setState(OFF);      			
 		} 
+		
 	} else {
 		env->setMsgAvalible(false);
 	}

@@ -14,7 +14,8 @@ void LedTask::init(int period){
 	Task::init(period);
 	l1 = new LedExt(this->pinL1); 
 	l2 = new Led(this->pinL2); 
-	currentTime = initialTime = 0;   
+	currentTime = initialTime = 0; 
+	this->PulseState = FIRST;  
 }
 
 void LedTask::tick(){
@@ -39,14 +40,18 @@ void LedTask::tick(){
 			break;
 		}
 		case PARK:{
-			//L1 deve pulsare				
+			//L1 deve pulsare	
+
 			switch(PulseState){
-				case FIRST:{			
+				case FIRST:{
+					Serial.println("First");			
         			intensity = 0;
         			PulseState = PULSE_UP;	        							
 					break;
 				}
 				case PULSE_UP: {
+					Serial.println("Pulse up");
+					
 					for (int i = 0; i < 50; i++){
         				intensity++;
         				l1->setIntensity(intensity);      
@@ -57,6 +62,9 @@ void LedTask::tick(){
       				break;	
 				}				
 				case PULSE_DOWN:{
+					Serial.println("Pulse Down");
+					
+					
 					for (int i = 0; i < 50; i++){
         				intensity--;
         				l1->setIntensity(intensity);      
