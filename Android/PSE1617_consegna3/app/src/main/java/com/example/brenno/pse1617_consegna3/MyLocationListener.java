@@ -5,14 +5,11 @@ import android.location.LocationListener;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.example.brenno.pse1617_consegna3.MainActivity;
-
 /**
  * Created by brenno on 06/12/2016.
  */
 
 public class MyLocationListener implements LocationListener {
-
     private double latitude;
     private double longitude;
     private MainActivity activity;

@@ -12,7 +12,10 @@ public class C {
     static final String PRESENCE_MESSAGE = "Presenza veicolo - distanza: ";
     static final String CONTACT_MESSAGE = "contatto";
 
-    public static final String END_SEEK_COMUNICATION = "fine";
+    static final String END_SEEK_COMUNICATION = "fine";
 
-    public static final String EMAIL_CC = "Rilavato contatto";
+    static final String FROM_USERNAME = "pse.student.unibo@gmail.com";
+    static final String FROM_PASSWORD = "pse.student";
+    static final String MAIL_SUBJECT = "Rilavato contatto";
+    static final String BODY_MAIL = "This is the mail body";
 }

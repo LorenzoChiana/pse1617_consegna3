@@ -61,11 +61,12 @@ public class MainActivityHandler extends Handler {
                             EditText emailText = (EditText) activity.findViewById(R.id.editEmail);
                             if(!emailText.getText().equals("")) {
                                 try {
-                                    String fromUsername = "pse.student.unibo@gmail.com";
-                                    String fromPassword = "pse.student";
-                                    List<String> toAddress = new ArrayList<>(Arrays.asList(new String[]{"lorenzo.chiana@gmail.com"}));
-                                    String mailSubject = "Prova Email";
-                                    String mailBody = "This is the mail body";
+                                    String fromUsername = C.FROM_USERNAME;
+                                    String fromPassword = C.FROM_PASSWORD;
+                                    EditText toUsername = (EditText) activity.findViewById(R.id.editEmail);
+                                    List<String> toAddress = new ArrayList<>(Arrays.asList(new String[]{toUsername.getText().toString()}));
+                                    String mailSubject = C.MAIL_SUBJECT;
+                                    String mailBody = C.BODY_MAIL;
                                     GmailEmail email = new GmailEmail(mailSubject, mailBody, toAddress);
                                     GmailClient client = new GmailClient(fromUsername,fromPassword);
                                     client.sendEmail(email);
