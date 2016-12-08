@@ -45,7 +45,7 @@ public class MainActivityHandler extends Handler {
 
                 case CONTACT_MESSAGE:
                     textAlarmMessage.setText(textAlarmMessage.getText() + CONTACT_MESSAGE + "\n");
-                    if (spinnerMod.getSelectedItem().toString().equals("Accessa in movimento")) {
+                    if (spinnerMod.getSelectedItem().toString().equals("Accesa in movimento")) {
                         //comparire l’opportuna UI per regolare il meccanismo
                         activity.showUIContact();
 
