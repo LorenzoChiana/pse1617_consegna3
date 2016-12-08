@@ -22,8 +22,6 @@ public class MyLocationListener implements LocationListener {
         latitude =  location.getLatitude();
         longitude = location.getLongitude();
         Log.d("pos", "Listen: (" + latitude + "," + longitude + ")");
-        activity.setLatitude(latitude);
-        activity.setLongitude(longitude);
     }
 
     public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -37,4 +35,13 @@ public class MyLocationListener implements LocationListener {
     public void onProviderDisabled(String provider) {
 
     }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
 }

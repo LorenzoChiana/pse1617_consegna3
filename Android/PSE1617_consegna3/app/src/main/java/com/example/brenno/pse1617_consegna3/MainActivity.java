@@ -10,7 +10,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -40,10 +39,8 @@ public class MainActivity extends Activity {
     private BluetoothAdapter btAdapter;
     private BluetoothDevice targetDevice;
     private LocationManager lm;
-    private LocationListener locationListener;
+    private MyLocationListener locationListener;
     private static MainActivityHandler uiHandler;
-
-    private double latitude, longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,15 +125,6 @@ public class MainActivity extends Activity {
         }
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
-    }
-
-
     public String[] getArraySpinner() {
         return arraySpinner;
     }
@@ -214,9 +202,9 @@ public class MainActivity extends Activity {
 
     void hideMailUI() {
         TextView label = (TextView) findViewById(R.id.textEmail);
-        label.setVisibility(View.GONE);
+        label.setVisibility(View.INVISIBLE);
         EditText edit = (EditText) findViewById(R.id.editEmail);
-        edit.setVisibility(View.GONE);
+        edit.setVisibility(View.INVISIBLE);
     }
 
     void showMailUI() {
@@ -252,7 +240,7 @@ public class MainActivity extends Activity {
     void showContactLocation() {
         //Memorizzo la posizione geografica del contatto su una textView
         TextView textContatto = (TextView) findViewById(R.id.textContatto);
-        textContatto.setText("Punto di contatto: (" + latitude + "," + longitude + ")");
+        textContatto.setText("Punto di contatto: (" + locationListener.getLatitude() + "," + locationListener.getLongitude() + ")");
         textContatto.setVisibility(View.VISIBLE);
     }
 
