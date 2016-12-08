@@ -10,7 +10,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -23,11 +22,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.net.Uri;
 
-import com.example.brenno.pse1617_consegna3.bt.*;
+import com.example.brenno.pse1617_consegna3.bt.BluetoothConnectionManager;
+import com.example.brenno.pse1617_consegna3.bt.BluetoothConnectionTask;
+import com.example.brenno.pse1617_consegna3.bt.BluetoothUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.UUID;
@@ -39,10 +39,8 @@ public class MainActivity extends Activity {
     private BluetoothAdapter btAdapter;
     private BluetoothDevice targetDevice;
     private LocationManager lm;
-    private LocationListener locationListener;
+    private MyLocationListener locationListener;
     private static MainActivityHandler uiHandler;
-
-    private double latitude, longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,13 +48,9 @@ public class MainActivity extends Activity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        locationListener = new MyLocationListener(this);
+        locationListener = new MyLocationListener();
         initUI();
         uiHandler = new MainActivityHandler(this, new WeakReference<>(this));
-        EditText TO = (EditText) findViewById(R.id.editEmail);
-        TO.setText("lorenzo.chiana@gmail.com");
-        new SendEmailActivity();
-        /*sendEmail();*/
     }
 
     @Override
@@ -131,15 +125,6 @@ public class MainActivity extends Activity {
         }
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
-    }
-
-
     public String[] getArraySpinner() {
         return arraySpinner;
     }
@@ -191,8 +176,11 @@ public class MainActivity extends Activity {
     }
 
     private void initUI() {
+        Switch notifica = (Switch) findViewById(R.id.switchNotifica);
+        notifica.setOnCheckedChangeListener(new MySwitchOnClickListener(this));
+        hideMailUI();
         this.arraySpinner = new String[]{
-                "Accesa in movimento", "Spenta in parcheggio", "Spenta non in parcheggio"
+                "Spenta non in parcheggio", "Spenta in parcheggio", "Accesa in movimento"
         };
 
         final Spinner spinner = (Spinner) findViewById(R.id.spinnerMod);
@@ -212,6 +200,19 @@ public class MainActivity extends Activity {
 
     }
 
+    void hideMailUI() {
+        TextView label = (TextView) findViewById(R.id.textEmail);
+        label.setVisibility(View.INVISIBLE);
+        EditText edit = (EditText) findViewById(R.id.editEmail);
+        edit.setVisibility(View.INVISIBLE);
+    }
+
+    void showMailUI() {
+        TextView label = (TextView) findViewById(R.id.textEmail);
+        label.setVisibility(View.VISIBLE);
+        EditText edit = (EditText) findViewById(R.id.editEmail);
+        edit.setVisibility(View.VISIBLE);
+    }
 
     private void showBluetoothUnavailableAlert() {
         AlertDialog dialog = new AlertDialog.Builder(this)
@@ -239,32 +240,10 @@ public class MainActivity extends Activity {
     void showContactLocation() {
         //Memorizzo la posizione geografica del contatto su una textView
         TextView textContatto = (TextView) findViewById(R.id.textContatto);
-        textContatto.setText("Punto di contatto: (" + latitude + "," + longitude + ")");
+        textContatto.setText("Punto di contatto: (" + locationListener.getLatitude() + "," + locationListener.getLongitude() + ")");
         textContatto.setVisibility(View.VISIBLE);
     }
 
-   /* protected void sendEmail() {
-        Log.i("Send email", "");
-
-        Intent emailIntent = new Intent(Intent.ACTION_SEND);
-        emailIntent.setData(Uri.parse("mailto:"));
-        emailIntent.setType("text/plain");
-
-        EditText TO = (EditText) findViewById(R.id.editEmail);
-        emailIntent.putExtra(Intent.EXTRA_EMAIL, TO.getText());
-        emailIntent.putExtra(Intent.EXTRA_CC, C.EMAIL_CC);
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Your subject");
-        emailIntent.putExtra(Intent.EXTRA_TEXT, "Email message goes here");
-
-        try {
-            startActivity(Intent.createChooser(emailIntent, "Send mail..."));
-            finish();
-        } catch (android.content.ActivityNotFoundException ex) {
-            Toast.makeText(MainActivity.this,
-                    "There is no email client installed.", Toast.LENGTH_SHORT).show();
-        }
-    }
-*/
     public static MainActivityHandler getHandler() {
         return uiHandler;
     }

@@ -5,14 +5,10 @@ import android.view.View;
 import com.example.brenno.pse1617_consegna3.bt.BluetoothConnectionManager;
 import com.example.brenno.pse1617_consegna3.bt.MsgTooBigException;
 
-/**
- * Created by brenno on 06/12/2016.
- */
-
-public class MyButtonEndSeekListener implements View.OnClickListener {
+class MyButtonEndSeekListener implements View.OnClickListener {
     private MainActivity activity;
 
-    public MyButtonEndSeekListener(MainActivity activity) {
+    MyButtonEndSeekListener(MainActivity activity) {
         this.activity = activity;
     }
 

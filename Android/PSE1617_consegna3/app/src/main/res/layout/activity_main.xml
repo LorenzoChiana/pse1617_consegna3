@@ -34,6 +34,21 @@
         android:checked="false" />
 
     <TextView
+        android:text="Inserisci e-mail:"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textEmail" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/editEmail"
+        android:cursorVisible="true"
+        android:background="@android:drawable/editbox_background" />
+
+    <TextView
         android:text="Modalità auto:"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -83,19 +98,6 @@
         android:layout_width="match_parent"
         android:layout_height="27dp"
         android:id="@+id/textContatto" />
-
-    <TextView
-        android:text="Inserisci e-mail:"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textEmail" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:ems="10"
-        android:id="@+id/editEmail" />
 
 
 </LinearLayout>
