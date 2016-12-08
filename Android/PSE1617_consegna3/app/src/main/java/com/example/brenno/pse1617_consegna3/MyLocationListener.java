@@ -5,18 +5,9 @@ import android.location.LocationListener;
 import android.os.Bundle;
 import android.util.Log;
 
-/**
- * Created by brenno on 06/12/2016.
- */
-
-public class MyLocationListener implements LocationListener {
+class MyLocationListener implements LocationListener {
     private double latitude;
     private double longitude;
-    private MainActivity activity;
-
-    public MyLocationListener(MainActivity activity) {
-        this.activity = activity;
-    }
 
     public void onLocationChanged(Location location) {
         latitude =  location.getLatitude();
@@ -36,11 +27,11 @@ public class MyLocationListener implements LocationListener {
 
     }
 
-    public double getLatitude() {
+    double getLatitude() {
         return latitude;
     }
 
-    public double getLongitude() {
+    double getLongitude() {
         return longitude;
     }
 

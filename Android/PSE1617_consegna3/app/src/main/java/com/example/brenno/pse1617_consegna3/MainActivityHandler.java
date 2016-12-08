@@ -20,10 +20,6 @@ import javax.mail.MessagingException;
 import static com.example.brenno.pse1617_consegna3.C.CONTACT_MESSAGE;
 
 /**
- * Created by brenno on 06/12/2016.
- */
-
-/**
  * The Handler Associated to the MainActivity Class
  */
 

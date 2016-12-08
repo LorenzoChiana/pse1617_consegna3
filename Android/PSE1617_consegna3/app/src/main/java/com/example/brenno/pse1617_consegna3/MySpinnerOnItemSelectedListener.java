@@ -7,14 +7,10 @@ import android.widget.AdapterView;
 import com.example.brenno.pse1617_consegna3.bt.BluetoothConnectionManager;
 import com.example.brenno.pse1617_consegna3.bt.MsgTooBigException;
 
-/**
- * Created by brenno on 06/12/2016.
- */
-
-public class MySpinnerOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
+class MySpinnerOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
     private MainActivity activity;
 
-    public MySpinnerOnItemSelectedListener(MainActivity activity) {
+    MySpinnerOnItemSelectedListener(MainActivity activity) {
         this.activity = activity;
     }
 

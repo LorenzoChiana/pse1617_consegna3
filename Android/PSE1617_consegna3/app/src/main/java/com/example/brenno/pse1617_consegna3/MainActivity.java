@@ -48,7 +48,7 @@ public class MainActivity extends Activity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        locationListener = new MyLocationListener(this);
+        locationListener = new MyLocationListener();
         initUI();
         uiHandler = new MainActivityHandler(this, new WeakReference<>(this));
     }

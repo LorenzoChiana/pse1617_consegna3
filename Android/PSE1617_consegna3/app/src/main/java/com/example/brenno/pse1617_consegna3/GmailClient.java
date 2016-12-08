@@ -1,9 +1,5 @@
 package com.example.brenno.pse1617_consegna3;
 
-/**
- * Created by brenno on 07/12/2016.
- */
-
 import android.util.Log;
 
 import java.io.UnsupportedEncodingException;

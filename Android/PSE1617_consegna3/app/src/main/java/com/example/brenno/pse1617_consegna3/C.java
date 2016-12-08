@@ -17,5 +17,5 @@ public class C {
     static final String FROM_USERNAME = "pse.student.unibo@gmail.com";
     static final String FROM_PASSWORD = "pse.student";
     static final String MAIL_SUBJECT = "Rilavato contatto";
-    static final String BODY_MAIL = "This is the mail body";
+    static final String BODY_MAIL = "E' stato rilevato un contatto.";
 }
