@@ -12,8 +12,7 @@ DistanceTask::DistanceTask(int echoPin, int triggerPin, Environment* env){
 
 void DistanceTask::init(int period){
 	Task::init(period);
-	proximitySensor = new Sonar(this->echoPin, this->triggerPin); 
-	this->isNear = false;   
+	proximitySensor = new Sonar(this->echoPin, this->triggerPin);    
 }
 
 void DistanceTask::tick(){
@@ -21,26 +20,29 @@ void DistanceTask::tick(){
 	State currentState = env->getState();
 	char* distanceString;
 	switch(currentState){
-		case OFF:
+		case OFF:{
 			//Non rilevare
-		break;
-		case MOVEMENT:
+			break;
+		}
+		case MOVEMENT:{
 			//Rileva la distanza		
 			currentDistance = proximitySensor->getDistance();
 			env->setDistance(currentDistance);
-
+			//Serial.print("Distanza corrente: "); Serial.println(currentDistance);
 			if (currentDistance > DMAX){
 				String d = String(currentDistance,3);
 				String text = String("Presenza veicolo - distanza: " + d);
 				//Manda messaggio con scritto “Presenza veicolo - distanza: d”
         		Msg* temp = new Msg(text);
-				this->env->getChannel()->sendMsg(*temp);
+				env->getChannel()->sendMsg(*temp);
 				delete temp;
 			}
-		break;
-		case PARK:
+			break;
+		}
+		case PARK:{
 			//Non rilevare 
-		break;
+			break;
+		}
 	}
 }
 

@@ -33,9 +33,12 @@ void PressionTask::tick(){
 		case MOVEMENT:
 			//Messaggio “contatto”
 			//Se lo premo una volta
+			//Serial.print("Bottone: "); Serial.print(buttonState); 
+			//Serial.print("  firstPress: "); Serial.print(firstPress);
+			//Serial.print("  waitingMsg: "); Serial.println(waitingMsg);
 			if (buttonState && firstPress && !waitingMsg){
         		Msg* temp = new Msg("contatto");
-				this->env->getChannel()->sendMsg(*temp);
+				env->getChannel()->sendMsg(*temp);
         		delete temp;
 
 				firstPress = false;
@@ -46,16 +49,18 @@ void PressionTask::tick(){
 				firstPress = true;
 			}
 			//Accetto i messaggi in arrivo fino a quando viene mandato fine
-			if (this->env->isMsgAvalible() && waitingMsg){
+			if (env->isMsgAvalible() && waitingMsg){
 				//Asepttare risposta di contatto con indicazioni sul motorino 
-				  
     			if (env->getLastMsg() == "fine"){ 
     				waitingMsg = false;      			
        			} 
        			char* contenuto ;
        			env->getLastMsg().toCharArray(contenuto, sizeof(env->getLastMsg()));
+       			//Serial.print("Numero ricevuto: ");Serial.print(contenuto);
+       			//Serial.print("  E un numero: "); Serial.println(is_int(contenuto));
        			if (is_int(contenuto)) {
        				setAngle(env->getLastMsg().toInt());
+       				//Serial.print("Angolo settato a"); Serial.println(env->getLastMsg().toInt());
        			}
        			waitingMsg = false;
     		}	
@@ -64,9 +69,10 @@ void PressionTask::tick(){
 			//Accendi L2 per due secondi
 			if (buttonState){
 				initialTime = currentTime = millis();
+				Serial.println("Inizia a contare");
 				//Manda comando per la posizione
         		Msg* temp = new Msg("contatto");
-				this->env->getChannel()->sendMsg(*temp);
+				env->getChannel()->sendMsg(*temp);
 				delete temp;
 			} 
 			else {
@@ -75,9 +81,11 @@ void PressionTask::tick(){
 
 			if (currentTime - initialTime > 2000){
 				env->setTouched(false);
+				Serial.println("Spegni il led");
 			}
 			else {
 				env->setTouched(true);
+				Serial.println("Accendi il led");
 			}
 		break;
 	}
@@ -88,12 +96,10 @@ void PressionTask::setAngle(int angle){
 	angle = angle<0?0:angle;
 	servo.write(angle);
 }	
-bool PressionTask::is_int(char const* p)
-{
+bool PressionTask::is_int(char const* p){
     int length = strlen(p);
     for (int i=0;i<length; i++)
-        if (!isdigit(p[i]))
-        {
+        if (!isdigit(p[i])){
             return false;
         }
     return true;

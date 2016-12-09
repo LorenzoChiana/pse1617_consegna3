@@ -73,6 +73,8 @@ The pulse width timing is accurate to within 1%
 #define ServoTimer2_h
 
 #include <inttypes.h>
+typedef bool boolean;
+typedef uint8_t byte;
 
 #define MIN_PULSE_WIDTH       750        // the shortest pulse sent to a servo  
 
