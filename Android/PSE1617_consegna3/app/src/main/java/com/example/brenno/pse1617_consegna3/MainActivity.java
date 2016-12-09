@@ -190,7 +190,7 @@ public class MainActivity extends Activity {
 
         TextView textAlarmMessage = (TextView) findViewById(R.id.textAlarmMessage);
         textAlarmMessage.setMovementMethod(new ScrollingMovementMethod());
-
+        hideContactLocation();
         hideUIContact();
         SeekBar seekBar = (SeekBar) findViewById(R.id.seekBar);
         seekBar.setOnSeekBarChangeListener(new MySeekBarListener());
