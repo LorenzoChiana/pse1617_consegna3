@@ -22,6 +22,18 @@ class MySpinnerOnItemSelectedListener implements AdapterView.OnItemSelectedListe
         } catch (MsgTooBigException e) {
             e.printStackTrace();
         }
+        switch (activity.getArraySpinner()[position]) {
+            case C.ACCESA_MOV:
+                activity.hideContactLocation();
+                break;
+            case C.SPENTA_NON_PARC:
+                activity.hideUIContact();
+                activity.hideContactLocation();
+                break;
+            case C.SPENTA_PARC:
+                activity.hideUIContact();
+                break;
+        }
     }
 
     @Override

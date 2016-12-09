@@ -45,11 +45,14 @@ public class MainActivityHandler extends Handler {
 
                 case CONTACT_MESSAGE:
                     textAlarmMessage.setText(textAlarmMessage.getText() + CONTACT_MESSAGE + "\n");
+<<<<<<< HEAD
                     if (spinnerMod.getSelectedItem().toString().equals("Accesa in movimento")) {
+=======
+                    if (spinnerMod.getSelectedItem().toString().equals(C.ACCESA_MOV)) {
+>>>>>>> android
                         //comparire l’opportuna UI per regolare il meccanismo
                         activity.showUIContact();
-
-                    } else if (spinnerMod.getSelectedItem().toString().equals("Spenta in parcheggio")) {
+                    } else if (spinnerMod.getSelectedItem().toString().equals(C.SPENTA_PARC)) {
                         activity.showContactLocation();
                         //se in C è specificata una modalità “notifica”, allora mando una mail
                         Switch switchNotifica = (Switch) activity.findViewById(R.id.switchNotifica);
@@ -72,14 +75,14 @@ public class MainActivityHandler extends Handler {
                             }
                         }
 
-                    }
+                    } 
                     break;
 
                 default:
                         /*if(message.contains(C.TEMP_ANSWER_PREFIX)) {
                             context.get().showTempValue(Double.parseDouble(message.replace(C.TEMP_ANSWER_PREFIX, "")));
                         }*/
-                    if (spinnerMod.getSelectedItem().toString().equals("Accessa in movimento")) {
+                    if (spinnerMod.getSelectedItem().toString().equals(C.ACCESA_MOV)) {
                         if (message.contains(C.PRESENCE_MESSAGE + "\n")) {
                             textAlarmMessage.setText(textAlarmMessage.getText() + message);
                         }
