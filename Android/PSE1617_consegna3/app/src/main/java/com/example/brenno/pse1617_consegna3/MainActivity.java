@@ -10,10 +10,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
@@ -39,7 +40,7 @@ public class MainActivity extends Activity {
     private BluetoothAdapter btAdapter;
     private BluetoothDevice targetDevice;
     private LocationManager lm;
-    private MyLocationListener locationListener;
+    private LocationListener locationListener;
     private static MainActivityHandler uiHandler;
 
     @Override
@@ -47,8 +48,6 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);
-        lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        locationListener = new MyLocationListener();
         initUI();
         uiHandler = new MainActivityHandler(this, new WeakReference<>(this));
     }
@@ -74,15 +73,21 @@ public class MainActivity extends Activity {
             showBluetoothUnavailableAlert();
         }
 
-        int permission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
 
-        if (permission == PackageManager.PERMISSION_GRANTED) {
-            requestLocationUpdates();
-        } else {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    ACCESS_FINE_LOCATION_REQUEST);
+        lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationListener = new MyLocationListener();
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
         }
+        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+
     }
 
     @Override
@@ -186,7 +191,7 @@ public class MainActivity extends Activity {
         final Spinner spinner = (Spinner) findViewById(R.id.spinnerMod);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, arraySpinner);
         spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(new MySpinnerOnItemSelectedListener(this));
+        //spinner.setOnItemSelectedListener(new MySpinnerOnItemSelectedListener(this));
 
         TextView textAlarmMessage = (TextView) findViewById(R.id.textAlarmMessage);
         textAlarmMessage.setMovementMethod(new ScrollingMovementMethod());
@@ -240,14 +245,26 @@ public class MainActivity extends Activity {
     void showContactLocation() {
         //Memorizzo la posizione geografica del contatto su una textView
         TextView textContatto = (TextView) findViewById(R.id.textContatto);
-        textContatto.setText("Punto di contatto: (" + locationListener.getLatitude() + "," + locationListener.getLongitude() + ")");
+
+        String lp = LocationManager.NETWORK_PROVIDER;
+        lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        Location lastKnownLocation = lm.getLastKnownLocation(lp);
+        textContatto.setText("Punto di contatto: (" + lastKnownLocation.getLatitude() + "," + lastKnownLocation.getLongitude() + ")");
         textContatto.setVisibility(View.VISIBLE);
     }
 
     void hideContactLocation() {
-        //Memorizzo la posizione geografica del contatto su una textView
         TextView textContatto = (TextView) findViewById(R.id.textContatto);
-        textContatto.setText("Punto di contatto: (" + locationListener.getLatitude() + "," + locationListener.getLongitude() + ")");
         textContatto.setVisibility(View.GONE);
     }
 
