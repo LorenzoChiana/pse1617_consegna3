@@ -12,6 +12,7 @@ class LedTask: public Task {
 	Led* l2;
 	int intensity;
 	long currentTime, initialTime;
+	bool ledState;
 	Environment* env;
 
 	enum {FIRST, PULSE, PULSE_UP, PULSE_DOWN} PulseState;

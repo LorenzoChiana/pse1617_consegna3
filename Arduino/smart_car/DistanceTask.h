@@ -7,7 +7,6 @@
 
 class DistanceTask: public Task {
 	int echoPin, triggerPin;
-	bool isNear;
 
 	Sonar* proximitySensor;
 	Environment* env;

@@ -3,20 +3,23 @@
 
 #include "Timer.h"
 #include "Task.h"
-
-#define MAX_TASKS 15
+#include "List.h"
 
 class Scheduler {
-  
-  int basePeriod;
-  int nTasks;
-  Task* taskList[MAX_TASKS];  
-  Timer timer;
 
 public:
+  Scheduler(int nMaxTasks);
   void init(int basePeriod);  
-  virtual bool addTask(Task* task);  
+  virtual bool addTask(Task* task); 
+  virtual bool removeTask(Task* task); 
   virtual void schedule();
+
+private:  
+  int basePeriod;
+  List<Task*>* taskList;
+  List<Task*>* tasksToBeAdded;
+  List<Task*>* tasksToBeRemoved;
+  Timer timer;
 };
 
 #endif
