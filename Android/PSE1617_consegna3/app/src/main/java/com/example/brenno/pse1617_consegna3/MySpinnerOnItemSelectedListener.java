@@ -19,6 +19,7 @@ class MySpinnerOnItemSelectedListener implements AdapterView.OnItemSelectedListe
         Log.d("Spinner selection: ", activity.getArraySpinner()[position]);
         try {
             BluetoothConnectionManager.getInstance().sendMsg(activity.getArraySpinner()[position]);
+            Log.d("Bt sent: ", activity.getArraySpinner()[position]);
         } catch (MsgTooBigException e) {
             e.printStackTrace();
         }
