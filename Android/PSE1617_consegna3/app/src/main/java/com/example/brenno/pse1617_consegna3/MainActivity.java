@@ -180,7 +180,7 @@ public class MainActivity extends Activity {
         notifica.setOnCheckedChangeListener(new MySwitchOnClickListener(this));
         hideMailUI();
         this.arraySpinner = new String[]{
-                "Spenta non in parcheggio", "Spenta in parcheggio", "Accesa in movimento"
+                C.SPENTA_NON_PARC, C.SPENTA_PARC, C.ACCESA_MOV
         };
 
         final Spinner spinner = (Spinner) findViewById(R.id.spinnerMod);
@@ -242,6 +242,13 @@ public class MainActivity extends Activity {
         TextView textContatto = (TextView) findViewById(R.id.textContatto);
         textContatto.setText("Punto di contatto: (" + locationListener.getLatitude() + "," + locationListener.getLongitude() + ")");
         textContatto.setVisibility(View.VISIBLE);
+    }
+
+    void hideContactLocation() {
+        //Memorizzo la posizione geografica del contatto su una textView
+        TextView textContatto = (TextView) findViewById(R.id.textContatto);
+        textContatto.setText("Punto di contatto: (" + locationListener.getLatitude() + "," + locationListener.getLongitude() + ")");
+        textContatto.setVisibility(View.GONE);
     }
 
     public static MainActivityHandler getHandler() {
