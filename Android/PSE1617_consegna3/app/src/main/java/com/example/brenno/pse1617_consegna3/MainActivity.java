@@ -191,7 +191,7 @@ public class MainActivity extends Activity {
         final Spinner spinner = (Spinner) findViewById(R.id.spinnerMod);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, arraySpinner);
         spinner.setAdapter(adapter);
-        //spinner.setOnItemSelectedListener(new MySpinnerOnItemSelectedListener(this));
+        spinner.setOnItemSelectedListener(new MySpinnerOnItemSelectedListener(this));
 
         TextView textAlarmMessage = (TextView) findViewById(R.id.textAlarmMessage);
         textAlarmMessage.setMovementMethod(new ScrollingMovementMethod());

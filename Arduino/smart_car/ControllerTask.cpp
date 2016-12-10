@@ -11,8 +11,8 @@ void ControllerTask::init(int period){
 }
 
 void ControllerTask::tick(){
-	Serial.print("Messaggio disponibile: ");
-	Serial.println(this->env->getChannel()->isMsgAvailable());
+	/*Serial.print("Messaggio disponibile: ");
+	Serial.println(this->env->getChannel()->isMsgAvailable());*/
 	if (this->env->getChannel()->isMsgAvailable()){
 
 		Msg* tempMsg = env->getChannel()->receiveMsg();

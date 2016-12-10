@@ -21,7 +21,7 @@ class MySeekBarListener implements SeekBar.OnSeekBarChangeListener {
         //mando in tempo reale i valori di cambiamento della seekbar ad arduino
         try {
             BluetoothConnectionManager.getInstance().sendMsg(String.valueOf(progress));
-            Log.d("Bt sent: ", String.valueOf(progress));
+            Log.d("Bt_sent", String.valueOf(progress));
         } catch (MsgTooBigException e) {
             e.printStackTrace();
         }

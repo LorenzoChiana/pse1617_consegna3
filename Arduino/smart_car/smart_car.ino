@@ -1,3 +1,5 @@
+#include <Arduino.h>
+
 #include "config.h"
 
 #include "Task.h"
@@ -18,26 +20,23 @@ void setup() {
   sched.init(CLOCK);
 
   
-/*
+
   Task* controllerTask = new ControllerTask(env);
   controllerTask->init(CLOCK);
   sched.addTask(controllerTask);
-*/
-/*
+
   Task* distanceTask = new DistanceTask(ECHO_PIN, TRIG_PIN, env);
   distanceTask->init(3*CLOCK);
   sched.addTask(distanceTask);
-*/
-/*
+
   Task* pressionTask = new PressionTask(T1_PIN, SERVO_PIN, env);
   pressionTask->init(CLOCK);
   sched.addTask(pressionTask);
- */ 
- /*
+ 
   Task* ledTask = new LedTask(L1_PIN, L2_PIN, env);
   ledTask->init(CLOCK);
   sched.addTask(ledTask);
- */
+ 
 }
 
 void loop() {
