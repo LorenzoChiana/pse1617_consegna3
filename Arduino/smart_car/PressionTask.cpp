@@ -48,6 +48,10 @@ void PressionTask::tick(){
 			if (!buttonState){
 				firstPress = true;
 			}
+			Serial.print("isMsgAvalible: ");
+			Serial.println(env->isMsgAvalible());
+			Serial.print("waitingMsg: ");
+			Serial.println(waitingMsg);
 			//Accetto i messaggi in arrivo fino a quando viene mandato fine
 			if (env->isMsgAvalible() && waitingMsg){
 				//Asepttare risposta di contatto con indicazioni sul motorino 
@@ -56,13 +60,13 @@ void PressionTask::tick(){
        			} 
        			char* contenuto ;
        			env->getLastMsg().toCharArray(contenuto, sizeof(env->getLastMsg()));
-       			//Serial.print("Numero ricevuto: ");Serial.print(contenuto);
-       			//Serial.print("  E un numero: "); Serial.println(is_int(contenuto));
+       			Serial.print("Numero ricevuto: ");Serial.print(contenuto);
+       			Serial.print("  E un numero: "); Serial.println(is_int(contenuto));
        			if (is_int(contenuto)) {
        				setAngle(env->getLastMsg().toInt());
-       				//Serial.print("Angolo settato a"); Serial.println(env->getLastMsg().toInt());
+       				Serial.print("Angolo settato a"); Serial.println(env->getLastMsg().toInt());
        			}
-       			waitingMsg = false;
+       			//waitingMsg = false;
     		}	
 		break;
 		case PARK:
