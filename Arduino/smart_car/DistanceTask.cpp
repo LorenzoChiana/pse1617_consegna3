@@ -31,7 +31,6 @@ void DistanceTask::tick(){
 			//Serial.print("Distanza corrente: "); Serial.println(currentDistance);
 			if (currentDistance > DMAX){
 				String d = String(currentDistance,3);
-				Serial.println("Mando: Presenza veicolo - distanza: " + d);
 				String text = String("Presenza veicolo - distanza: " + d);
 				//Manda messaggio con scritto “Presenza veicolo - distanza: d”
         		Msg* temp = new Msg(text);

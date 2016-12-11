@@ -67,7 +67,8 @@ void PressionTask::tick(){
 		break;
 		case PARK:
 			//Accendi L2 per due secondi
-			if (buttonState){
+			if (buttonState && firstPress){
+				firstPress = false;
 				initialTime = currentTime = millis();
 				Serial.println("Inizia a contare");
 				//Manda comando per la posizione
@@ -77,6 +78,11 @@ void PressionTask::tick(){
 			} 
 			else {
 				currentTime = millis();
+			}
+
+			//Quando rilascio il bottone posso reinviare il messaggio
+			if (!buttonState){
+				firstPress = true;
 			}
 
 			if (currentTime - initialTime > 2000){
