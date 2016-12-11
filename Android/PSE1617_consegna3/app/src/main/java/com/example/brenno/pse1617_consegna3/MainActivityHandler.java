@@ -2,6 +2,7 @@ package com.example.brenno.pse1617_consegna3;
 
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -11,8 +12,10 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.ref.WeakReference;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import javax.mail.MessagingException;
@@ -26,6 +29,7 @@ import static com.example.brenno.pse1617_consegna3.C.CONTACT_MESSAGE;
 public class MainActivityHandler extends Handler {
     private MainActivity activity;
     private final WeakReference<MainActivity> context;
+    private String currentDateTimeString;
 
     public MainActivityHandler(MainActivity activity, WeakReference<MainActivity> context) {
         this.activity = activity;
@@ -40,11 +44,11 @@ public class MainActivityHandler extends Handler {
             String message = obj.toString();
             TextView textAlarmMessage = (TextView) activity.findViewById(R.id.textAlarmMessage);
             Spinner spinnerMod = (Spinner) activity.findViewById(R.id.spinnerMod);
-
+            Log.d("RecivedMsg", message);
             switch (message){
 
                 case CONTACT_MESSAGE:
-                    textAlarmMessage.setText(textAlarmMessage.getText() + CONTACT_MESSAGE + "\n");
+                    textAlarmMessage.append(currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date()) + ": " + CONTACT_MESSAGE + "\n");
                     if (spinnerMod.getSelectedItem().toString().equals("Accesa in movimento")) {
                         if (spinnerMod.getSelectedItem().toString().equals(C.ACCESA_MOV)) {
                             //comparire l’opportuna UI per regolare il meccanismo
@@ -77,8 +81,8 @@ public class MainActivityHandler extends Handler {
                     }
                 default:
                     if (spinnerMod.getSelectedItem().toString().equals(C.ACCESA_MOV)) {
-                        if (message.contains(C.PRESENCE_MESSAGE + "\n")) {
-                            textAlarmMessage.setText(textAlarmMessage.getText() + message);
+                        if (message.contains(C.PRESENCE_MESSAGE)) {
+                            textAlarmMessage.append(currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date()) + ": " + message + "\n");
                         }
                     }
                     break;

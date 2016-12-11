@@ -73,7 +73,8 @@
         android:layout_height="130dp"
         android:id="@+id/textAlarmMessage"
         android:visibility="visible"
-        android:background="@android:drawable/editbox_background" />
+        android:background="@android:drawable/editbox_background"
+        android:gravity="bottom" />
 
     <TextView
         android:text="Regola meccanismo"
