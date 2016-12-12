@@ -37,11 +37,8 @@ void PressionTask::tick(){
 			//Serial.print("Bottone: "); Serial.print(buttonState); 
 			//Serial.print("  firstPress: "); Serial.print(firstPress);
 			//Serial.print("  waitingMsg: "); Serial.println(waitingMsg);
-			if (buttonState && firstPress && !waitingMsg){
-        		Msg* temp = new Msg("contatto");
-				env->getChannel()->sendMsg(*temp);
-        		delete temp;
-
+			if (buttonState && firstPress && !waitingMsg){        	
+				env->getChannel()->sendMsg(Msg("contatto"));
 				firstPress = false;
 				waitingMsg = true;
 			}
@@ -80,9 +77,7 @@ void PressionTask::tick(){
 				firstPress = false;
 				initialTime = currentTime = millis();
 				//Manda comando per la posizione
-        		Msg* temp = new Msg("contatto");
-				env->getChannel()->sendMsg(*temp);
-				delete temp;
+				env->getChannel()->sendMsg(Msg("contatto"));
 			} 
 			else {
 				currentTime = millis();
@@ -103,15 +98,14 @@ void PressionTask::tick(){
 	}
 }
 
-void PressionTask::setAngle(int angle){
-	angle = angle>180?180:angle;
-	angle = angle<0?0:angle;
-
+void PressionTask::setAngle(int thisAngle){
+	thisAngle = thisAngle>180?180:thisAngle;
+	thisAngle = thisAngle<0?0:thisAngle;
 	//Serial.print("Wrote on servo : "); Serial.println(angle);
-
-	int val = map(angle, 0, 180, 544, 2200);
-	this->servo->write(val);
+	int myValue = map(thisAngle, 0, 180, 500, 2200);
+	this->servo->write(myValue);
 }	
+
 bool PressionTask::is_int(char const* p){
     int length = strlen(p);
     for (int i=0;i<length; i++) {

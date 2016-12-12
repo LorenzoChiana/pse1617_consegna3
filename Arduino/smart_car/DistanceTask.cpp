@@ -35,9 +35,9 @@ void DistanceTask::tick(){
 				String d = String(currentDistance,3);
 				String text = String("Presenza veicolo - distanza: " + d);
 				//Manda messaggio con scritto “Presenza veicolo - distanza: d”
-        		Msg* temp = new Msg(text);
-				env->getChannel()->sendMsg(*temp);
-				delete temp;
+        		//Msg* temp = new Msg(text);
+				env->getChannel()->sendMsg(Msg(text));
+				//delete temp;
 			}
 			break;
 		}

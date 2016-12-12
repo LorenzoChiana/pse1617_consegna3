@@ -22,7 +22,7 @@
 
 #define DELAY_LED 250
 
-#define CLOCK 25
+#define CLOCK 100
 
 
 typedef enum {MOVEMENT, PARK, OFF} State;

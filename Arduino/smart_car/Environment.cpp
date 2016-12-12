@@ -6,8 +6,8 @@ void Environment::init(int RXpin, int TXpin){
 	this->setTouched(false);
 	this->setState(OFF);
 	this->initChannel(RXpin, TXpin);
-	lastMsg = "";
-	avalible = false;
+	this->lastMsg = "";
+	this->avalible = false;
 }
 
 void Environment::initChannel(int RXpin, int TXpin){

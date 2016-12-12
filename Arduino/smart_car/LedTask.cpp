@@ -58,7 +58,7 @@ void LedTask::tick(){
 				case PULSE_UP: {								
 					for (int i = 0; i < 50; i++){
 						intensity++;
-						l1->setIntensity(intensity);
+						l1->setIntensity(255);
                 //Serial.print("Intensita: "); 
                 //Serial.println(intensity);   
 					}  
@@ -70,7 +70,7 @@ void LedTask::tick(){
 				case PULSE_DOWN:{					
 					for (int i = 0; i < 50; i++){
 						intensity--;
-						l1->setIntensity(intensity);
+						l1->setIntensity(0);
 
                 //Serial.print("Intensita: ");
                 //Serial.println(intensity);       
@@ -81,7 +81,7 @@ void LedTask::tick(){
 					break;	
 				}
 			}			
-
+			
 			//Temp blink
 			/*
 			if (currentTime - initialTime > 200) {
