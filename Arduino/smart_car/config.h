@@ -7,7 +7,7 @@
 #define __CONFIG__
 
 #define T1_PIN 11
-#define L1_PIN 9
+#define L1_PIN 10
 #define L2_PIN 6
 #define ECHO_PIN 7
 #define TRIG_PIN 8
@@ -15,7 +15,7 @@
 #define PIN_RX 3
 #define PIN_TX 4
 
-#define SERVO_PIN 10
+#define SERVO_PIN 9
 
 #define DMIN 0.2
 #define DMAX 0.5

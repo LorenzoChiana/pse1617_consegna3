@@ -8,7 +8,6 @@
 #include "PressionTask.h"
 #include "ControllerTask.h"
 #include "Scheduler.h"
-#include "LedExt.h"
 
 Scheduler sched(10);
 Environment *env;
@@ -19,6 +18,12 @@ void setup() {
   Environment* env = new Environment();
   env->init(PIN_RX, PIN_TX);
   sched.init(CLOCK);
+
+  
+
+  Task* controllerTask = new ControllerTask(env);
+  controllerTask->init(CLOCK);
+  sched.addTask(controllerTask);
 
   Task* distanceTask = new DistanceTask(ECHO_PIN, TRIG_PIN, env);
   distanceTask->init(3*CLOCK);
