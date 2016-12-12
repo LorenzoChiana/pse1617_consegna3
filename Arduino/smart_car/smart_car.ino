@@ -6,6 +6,7 @@
 #include "PressionTask.h"
 #include "ControllerTask.h"
 #include "Scheduler.h"
+#include "LedExt.h"
 
 Scheduler sched(10);
 Environment *env;
@@ -17,12 +18,15 @@ void setup() {
   env->init(PIN_RX, PIN_TX);
   sched.init(CLOCK);
 
+  LedExt* l = new LedExt(L1_PIN);
+  l->switchOn();
+  l->setIntensity(128);
+
   
-/*
   Task* controllerTask = new ControllerTask(env);
   controllerTask->init(CLOCK);
   sched.addTask(controllerTask);
-*/
+
 /*
   Task* distanceTask = new DistanceTask(ECHO_PIN, TRIG_PIN, env);
   distanceTask->init(3*CLOCK);

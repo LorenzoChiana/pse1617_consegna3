@@ -17,11 +17,13 @@ void ControllerTask::tick(){
 
 		Msg* tempMsg = env->getChannel()->receiveMsg();
 		String tempVal = tempMsg->getContent();
-		env->updateLastMsg(tempVal);		
-  		env->setMsgAvalible(true);
   		 
   		Serial.print("Ricevuto : ");
-  		Serial.println(env->getLastMsg());
+  		Serial.println(tempVal);
+
+		env->updateLastMsg(tempVal);		
+  		env->setMsgAvalible(true);
+
 		if (env->getLastMsg() == "Spenta in parcheggio"){ 
 			env->setState(PARK);  		
 		} 
