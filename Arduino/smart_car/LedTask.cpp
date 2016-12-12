@@ -37,6 +37,8 @@ void LedTask::tick(){
 			l1->setIntensity(255);
 			if (env->getDistance() < DMIN){
 				l2->switchOn();
+			} else {
+				l2->switchOff();
 			}
 
 			PulseState = FIRST;
@@ -45,7 +47,7 @@ void LedTask::tick(){
 		case PARK:{
 			//L1 deve pulsare	
 			l1->switchOn();
-			/*
+			
 			switch(PulseState){
 				case FIRST:{
 					Serial.println("First");			
@@ -56,7 +58,7 @@ void LedTask::tick(){
 				case PULSE_UP: {								
 					for (int i = 0; i < 50; i++){
 						intensity++;
-						l1->setIntensity(255);
+						l1->setIntensity(intensity);
                 //Serial.print("Intensita: "); 
                 //Serial.println(intensity);   
 					}  
@@ -68,7 +70,7 @@ void LedTask::tick(){
 				case PULSE_DOWN:{					
 					for (int i = 0; i < 50; i++){
 						intensity--;
-						l1->setIntensity(0);
+						l1->setIntensity(intensity);
 
                 //Serial.print("Intensita: ");
                 //Serial.println(intensity);       
@@ -79,8 +81,9 @@ void LedTask::tick(){
 					break;	
 				}
 			}			
-*/
+
 			//Temp blink
+			/*
 			if (currentTime - initialTime > 200) {
 				initialTime = currentTime = millis();
 				ledState = !ledState;
@@ -91,14 +94,14 @@ void LedTask::tick(){
 				}
 			} else {
 				currentTime = millis();
-			}
-
+			}*/
 			//Se è stato premuto attiva due secondi L2 e invia messaggio di posizione geografica + mail se c'è notifica
 			if (env->getTouched()){
 				l2->switchOn();
 			} else {
 				l2->switchOff();
 			}
+			
 			break;
 		}
 	}

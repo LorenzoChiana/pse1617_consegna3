@@ -17,8 +17,8 @@
 
 #define SERVO_PIN 9
 
-#define DMIN 0.2
-#define DMAX 0.5
+#define DMIN 0.1
+#define DMAX 0.1
 
 #define DELAY_LED 250
 

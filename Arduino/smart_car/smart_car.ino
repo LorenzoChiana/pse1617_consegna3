@@ -19,8 +19,6 @@ void setup() {
   env->init(PIN_RX, PIN_TX);
   sched.init(CLOCK);
 
-  
-
   Task* controllerTask = new ControllerTask(env);
   controllerTask->init(CLOCK);
   sched.addTask(controllerTask);

@@ -14,11 +14,12 @@ PressionTask::PressionTask(int pin, int servoPin, Environment* env){
 	this->currentTime = this->initialTime = 0;
 	this->firstPress = true;
 	this->waitingMsg = false;
+	this->servo = new ServoTimer2();
 }
 
 void PressionTask::init(int period){
 	Task::init(period);	
-	servo.attach(this->servoPin);  
+	servo->attach(this->servoPin);  
 	button = new ButtonImpl(this->pin); 
 }
 
@@ -56,14 +57,15 @@ void PressionTask::tick(){
 			if (env->isMsgAvalible() && waitingMsg){
 				//Asepttare risposta di contatto con indicazioni sul motorino 
     			if (env->getLastMsg() == "fine"){ 
+    				//Serial.print("Ricevuto fine");
     				waitingMsg = false;      			
        			} 
-       			char contenuto[3];
-       			Serial.print("Numero ricevuto: "); Serial.println(env->getLastMsg());
-       			env->getLastMsg().toCharArray(contenuto, /*sizeof(env->getLastMsg())*/3);
+       			char contenuto[4];
+       			//Serial.print("Numero ricevuto: "); Serial.println(env->getLastMsg());
+       			env->getLastMsg().toCharArray(contenuto, /*sizeof(env->getLastMsg())*/4);
        			if (is_int(contenuto)) {
        				setAngle(env->getLastMsg().toInt());
-       				Serial.print("Angolo settato a"); Serial.println(env->getLastMsg().toInt());
+       				//Serial.print("Angolo settato a "); Serial.println(env->getLastMsg().toInt());
        			} 
        			//altrimenti non è un numero quindi una richiesta diversa dal setServo
        			else {
@@ -77,7 +79,6 @@ void PressionTask::tick(){
 			if (buttonState && firstPress){
 				firstPress = false;
 				initialTime = currentTime = millis();
-				Serial.println("Inizia a contare");
 				//Manda comando per la posizione
         		Msg* temp = new Msg("contatto");
 				env->getChannel()->sendMsg(*temp);
@@ -94,11 +95,9 @@ void PressionTask::tick(){
 
 			if (currentTime - initialTime > 2000){
 				env->setTouched(false);
-				Serial.println("Spegni il led");
 			}
 			else {
 				env->setTouched(true);
-				Serial.println("Accendi il led");
 			}
 		break;
 	}
@@ -107,7 +106,11 @@ void PressionTask::tick(){
 void PressionTask::setAngle(int angle){
 	angle = angle>180?180:angle;
 	angle = angle<0?0:angle;
-	servo.write(angle);
+
+	//Serial.print("Wrote on servo : "); Serial.println(angle);
+
+	int val = map(angle, 0, 180, 544, 2200);
+	this->servo->write(val);
 }	
 bool PressionTask::is_int(char const* p){
     int length = strlen(p);

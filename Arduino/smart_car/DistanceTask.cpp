@@ -27,9 +27,11 @@ void DistanceTask::tick(){
 		case MOVEMENT:{
 			//Rileva la distanza		
 			currentDistance = proximitySensor->getDistance();
+			Serial.print("Diastanza corrente : "); Serial.print(currentDistance);
+			Serial.print("  Maggiore di DMAX? "); Serial.println(currentDistance>DMAX);
 			env->setDistance(currentDistance);
 			//Serial.print("Distanza corrente: "); Serial.println(currentDistance);
-			if (currentDistance > DMAX){
+			if (currentDistance < DMAX){
 				String d = String(currentDistance,3);
 				String text = String("Presenza veicolo - distanza: " + d);
 				//Manda messaggio con scritto “Presenza veicolo - distanza: d”

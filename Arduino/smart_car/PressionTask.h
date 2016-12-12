@@ -10,7 +10,7 @@ class PressionTask: public Task {
 	int pin, servoPin;	
 	Button* button;
 	bool firstPress, waitingMsg;
-	ServoTimer2 servo;
+	ServoTimer2* servo;
 	long currentTime, initialTime;
 	Environment* env;
 
