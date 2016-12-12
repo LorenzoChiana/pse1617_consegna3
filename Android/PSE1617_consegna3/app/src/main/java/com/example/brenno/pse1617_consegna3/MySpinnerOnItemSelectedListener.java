@@ -16,11 +16,24 @@ class MySpinnerOnItemSelectedListener implements AdapterView.OnItemSelectedListe
 
     @Override
     public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-        Log.d("Spinner selection: ", activity.getArraySpinner()[position]);
+        Log.d("SpinnerSelection", activity.getArraySpinner()[position]);
         try {
             BluetoothConnectionManager.getInstance().sendMsg(activity.getArraySpinner()[position]);
+            Log.d("Bt_sent", activity.getArraySpinner()[position]);
         } catch (MsgTooBigException e) {
             e.printStackTrace();
+        }
+        switch (activity.getArraySpinner()[position]) {
+            case C.ACCESA_MOV:
+                activity.hideContactLocation();
+                break;
+            case C.SPENTA_NON_PARC:
+                activity.hideUIContact();
+                activity.hideContactLocation();
+                break;
+            case C.SPENTA_PARC:
+                activity.hideUIContact();
+                break;
         }
     }
 

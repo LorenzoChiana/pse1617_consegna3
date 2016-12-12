@@ -48,26 +48,34 @@ void PressionTask::tick(){
 			if (!buttonState){
 				firstPress = true;
 			}
+			/*Serial.print("isMsgAvalible: ");
+			Serial.println(env->isMsgAvalible());
+			Serial.print("waitingMsg: ");
+			Serial.println(waitingMsg);*/
 			//Accetto i messaggi in arrivo fino a quando viene mandato fine
 			if (env->isMsgAvalible() && waitingMsg){
 				//Asepttare risposta di contatto con indicazioni sul motorino 
     			if (env->getLastMsg() == "fine"){ 
     				waitingMsg = false;      			
        			} 
-       			char* contenuto ;
-       			env->getLastMsg().toCharArray(contenuto, sizeof(env->getLastMsg()));
-       			//Serial.print("Numero ricevuto: ");Serial.print(contenuto);
-       			//Serial.print("  E un numero: "); Serial.println(is_int(contenuto));
+       			char contenuto[3];
+       			Serial.print("Numero ricevuto: "); Serial.println(env->getLastMsg());
+       			env->getLastMsg().toCharArray(contenuto, /*sizeof(env->getLastMsg())*/3);
        			if (is_int(contenuto)) {
        				setAngle(env->getLastMsg().toInt());
-       				//Serial.print("Angolo settato a"); Serial.println(env->getLastMsg().toInt());
+       				Serial.print("Angolo settato a"); Serial.println(env->getLastMsg().toInt());
+       			} 
+       			//altrimenti non è un numero quindi una richiesta diversa dal setServo
+       			else {
+       				waitingMsg = false;
        			}
-       			waitingMsg = false;
+       			
     		}	
 		break;
 		case PARK:
 			//Accendi L2 per due secondi
-			if (buttonState){
+			if (buttonState && firstPress){
+				firstPress = false;
 				initialTime = currentTime = millis();
 				Serial.println("Inizia a contare");
 				//Manda comando per la posizione
@@ -77,6 +85,11 @@ void PressionTask::tick(){
 			} 
 			else {
 				currentTime = millis();
+			}
+
+			//Quando rilascio il bottone posso reinviare il messaggio
+			if (!buttonState){
+				firstPress = true;
 			}
 
 			if (currentTime - initialTime > 2000){
@@ -98,9 +111,10 @@ void PressionTask::setAngle(int angle){
 }	
 bool PressionTask::is_int(char const* p){
     int length = strlen(p);
-    for (int i=0;i<length; i++)
+    for (int i=0;i<length; i++) {
         if (!isdigit(p[i])){
             return false;
         }
+    }
     return true;
 }

@@ -1,5 +1,6 @@
 package com.example.brenno.pse1617_consegna3;
 
+import android.util.Log;
 import android.view.View;
 
 import com.example.brenno.pse1617_consegna3.bt.BluetoothConnectionManager;
@@ -20,6 +21,7 @@ class MyButtonEndSeekListener implements View.OnClickListener {
                 //mando messaggio "fine" ad arduino
                 try {
                     BluetoothConnectionManager.getInstance().sendMsg(C.END_SEEK_COMUNICATION);
+                    Log.d("Bt_sent", C.END_SEEK_COMUNICATION);
                 } catch (MsgTooBigException e) {
                     e.printStackTrace();
                 }

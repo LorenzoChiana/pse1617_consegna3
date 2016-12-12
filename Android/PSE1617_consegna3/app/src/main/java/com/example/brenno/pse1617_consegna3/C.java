@@ -18,4 +18,8 @@ public class C {
     static final String FROM_PASSWORD = "pse.student";
     static final String MAIL_SUBJECT = "Rilavato contatto";
     static final String BODY_MAIL = "E' stato rilevato un contatto.";
+
+    static final String ACCESA_MOV = "Accesa in movimento";
+    static final String SPENTA_NON_PARC = "Spenta non in parcheggio";
+    static final String SPENTA_PARC = "Spenta in parcheggio";
 }
