@@ -28,15 +28,18 @@ void PressionTask::tick(){
 	State currentState = env->getState();
 	bool buttonState = button->isPressed();
 	switch(currentState){
-		case OFF:
+		case OFF:{
 			//Non rilevare
+		}
 		break;
-		case MOVEMENT:
+		case MOVEMENT:{
 			//Messaggio “contatto”
 			//Se lo premo una volta
-			//Serial.print("Bottone: "); Serial.print(buttonState); 
-			//Serial.print("  firstPress: "); Serial.print(firstPress);
-			//Serial.print("  waitingMsg: "); Serial.println(waitingMsg);
+			#ifdef debug
+				Serial.print("Bottone: "); Serial.print(buttonState); 
+				Serial.print("  firstPress: "); Serial.print(firstPress);
+				Serial.print("  waitingMsg: "); Serial.println(waitingMsg);
+			#endif
 			if (buttonState && firstPress && !waitingMsg){        	
 				env->getChannel()->sendMsg(Msg("contatto"));
 				firstPress = false;
@@ -46,23 +49,33 @@ void PressionTask::tick(){
 			if (!buttonState){
 				firstPress = true;
 			}
-			/*Serial.print("isMsgAvalible: ");
-			Serial.println(env->isMsgAvalible());
-			Serial.print("waitingMsg: ");
-			Serial.println(waitingMsg);*/
+			#ifdef debug
+				Serial.print("isMsgAvalible: ");
+				Serial.println(env->isMsgAvalible());
+				Serial.print("waitingMsg: ");
+				Serial.println(waitingMsg);
+			#endif
 			//Accetto i messaggi in arrivo fino a quando viene mandato fine
 			if (env->isMsgAvalible() && waitingMsg){
 				//Asepttare risposta di contatto con indicazioni sul motorino 
     			if (env->getLastMsg() == "fine"){ 
-    				//Serial.print("Ricevuto fine");
+    				#ifdef debug
+    					Serial.print("Ricevuto fine");
+    				#endif
     				waitingMsg = false;      			
        			} 
        			char contenuto[4];
-       			//Serial.print("Numero ricevuto: "); Serial.println(env->getLastMsg());
+
+       			#ifdef debug
+       				Serial.print("Numero ricevuto: "); Serial.println(env->getLastMsg());
+       			#endif
+
        			env->getLastMsg().toCharArray(contenuto, /*sizeof(env->getLastMsg())*/4);
        			if (is_int(contenuto)) {
        				setAngle(env->getLastMsg().toInt());
-       				//Serial.print("Angolo settato a "); Serial.println(env->getLastMsg().toInt());
+       				#ifdef debug
+       					Serial.print("Angolo settato a "); Serial.println(env->getLastMsg().toInt());
+       				#endif
        			} 
        			//altrimenti non è un numero quindi una richiesta diversa dal setServo
        			else {
@@ -70,8 +83,9 @@ void PressionTask::tick(){
        			}
        			
     		}	
-		break;
-		case PARK:
+			break;
+		}
+		case PARK:{
 			//Accendi L2 per due secondi
 			if (buttonState && firstPress){
 				firstPress = false;
@@ -94,14 +108,15 @@ void PressionTask::tick(){
 			else {
 				env->setTouched(true);
 			}
-		break;
+			break;
+		}
 	}
 }
 
 void PressionTask::setAngle(int thisAngle){
 	thisAngle = thisAngle>180?180:thisAngle;
 	thisAngle = thisAngle<0?0:thisAngle;
-	//Serial.print("Wrote on servo : "); Serial.println(angle);
+	
 	int myValue = map(thisAngle, 0, 180, 500, 2200);
 	this->servo->write(myValue);
 }	

@@ -30,14 +30,15 @@ void DistanceTask::tick(){
 			Serial.print("Diastanza corrente : "); Serial.print(currentDistance);
 			Serial.print("  Maggiore di DMAX? "); Serial.println(currentDistance>DMAX);
 			env->setDistance(currentDistance);
-			//Serial.print("Distanza corrente: "); Serial.println(currentDistance);
+
+			#ifdef debug
+				Serial.print("Distanza corrente: "); Serial.println(currentDistance);
+			#endif
+				
 			if (currentDistance < DMAX){
-				String d = String(currentDistance,3);
-				String text = String("Presenza veicolo - distanza: " + d);
+				String text = String("Presenza veicolo - distanza: " + String(currentDistance,3));
 				//Manda messaggio con scritto “Presenza veicolo - distanza: d”
-        		//Msg* temp = new Msg(text);
 				env->getChannel()->sendMsg(Msg(text));
-				//delete temp;
 			}
 			break;
 		}

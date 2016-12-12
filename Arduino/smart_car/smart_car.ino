@@ -1,5 +1,4 @@
 #include <Arduino.h>
-
 #include "config.h"
 
 #include "Task.h"
@@ -9,8 +8,16 @@
 #include "ControllerTask.h"
 #include "Scheduler.h"
 
-Scheduler sched(10);
-Environment *env;
+/*
+ * Matteo Minardi
+ * pse1617
+ * Consegna tre
+ */
+
+#define debug
+
+Scheduler sched(5);
+Environment* env;
 
 void setup() {
   Serial.begin(9600);
@@ -33,8 +40,7 @@ void setup() {
  
   Task* ledTask = new LedTask(L1_PIN, L2_PIN, env);
   ledTask->init(CLOCK);
-  sched.addTask(ledTask);
- 
+  sched.addTask(ledTask); 
 }
 
 void loop() {

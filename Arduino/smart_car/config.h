@@ -22,7 +22,11 @@
 
 #define DELAY_LED 250
 
-#define CLOCK 100
+#define CLOCK 50
+
+#define STR_PARK "Spenta in parcheggio"
+#define STR_MOVEMENT "Accesa in movimento"
+#define STR_OFF "Spenta non in parcheggio"
 
 
 typedef enum {MOVEMENT, PARK, OFF} State;
