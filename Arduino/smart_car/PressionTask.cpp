@@ -64,8 +64,12 @@ void PressionTask::tick(){
        			if (is_int(contenuto)) {
        				setAngle(env->getLastMsg().toInt());
        				Serial.print("Angolo settato a"); Serial.println(env->getLastMsg().toInt());
+       			} 
+       			//altrimenti non è un numero quindi una richiesta diversa dal setServo
+       			else {
+       				waitingMsg = false;
        			}
-       			//waitingMsg = false;
+       			
     		}	
 		break;
 		case PARK:
