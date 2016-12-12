@@ -22,4 +22,5 @@ public class C {
     static final String ACCESA_MOV = "Accesa in movimento";
     static final String SPENTA_NON_PARC = "Spenta non in parcheggio";
     static final String SPENTA_PARC = "Spenta in parcheggio";
+    static final String  MAIL_SENDED = "E-mail sended";
 }

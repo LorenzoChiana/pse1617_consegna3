@@ -14,6 +14,8 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -25,13 +27,20 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.brenno.pse1617_consegna3.bt.BluetoothConnectionManager;
 import com.example.brenno.pse1617_consegna3.bt.BluetoothConnectionTask;
 import com.example.brenno.pse1617_consegna3.bt.BluetoothUtils;
 
+import org.json.JSONObject;
+
 import java.lang.ref.WeakReference;
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.UUID;
+
+import static com.example.brenno.pse1617_consegna3.C.CONTACT_MESSAGE;
 
 public class MainActivity extends Activity {
     private static final int ACCESS_FINE_LOCATION_REQUEST = 1234;
@@ -49,7 +58,7 @@ public class MainActivity extends Activity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);
         initUI();
-        uiHandler = new MainActivityHandler(this, new WeakReference<>(this));
+        uiHandler = new MainActivityHandler(new WeakReference<>(this));
     }
 
     @Override
@@ -87,6 +96,24 @@ public class MainActivity extends Activity {
             return;
         }
         lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+
+        /*try {
+            String fromUsername = C.FROM_USERNAME;
+            String fromPassword = C.FROM_PASSWORD;
+            EditText toUsername = (EditText) findViewById(R.id.editEmail);
+            toUsername.setText("lorenzo.chiana@gmail.com");
+            List<String> toAddress = new ArrayList<>(Arrays.asList(new String[]{toUsername.getText().toString()}));
+            String mailSubject = C.MAIL_SUBJECT;
+            String mailBody = C.BODY_MAIL;
+            GmailEmail email = new GmailEmail(mailSubject, mailBody, toAddress);
+            GmailClient client = new GmailClient(fromUsername, fromPassword);
+            Log.d("dioporco", "4");
+            client.sendEmail(email);
+            Log.d("dioporco", "5");
+        } catch (UnsupportedEncodingException | MessagingException e) {
+            Log.d("dioporco", "6");
+            e.printStackTrace();
+        }*/
 
     }
 
@@ -271,4 +298,85 @@ public class MainActivity extends Activity {
     public static MainActivityHandler getHandler() {
         return uiHandler;
     }
+
+    public class MainActivityHandler extends Handler {
+        private final WeakReference<MainActivity> context;
+        private String currentDateTimeString;
+
+        public MainActivityHandler(WeakReference<MainActivity> context) {
+            this.context = context;
+        }
+
+        public void handleMessage(Message msg) {
+
+            Object obj = msg.obj;
+
+            if (obj instanceof String) {
+                String message = obj.toString();
+                TextView textAlarmMessage = (TextView) findViewById(R.id.textAlarmMessage);
+                Spinner spinnerMod = (Spinner) findViewById(R.id.spinnerMod);
+                Log.d("RecivedMsg", message);
+                switch (message) {
+
+                    case CONTACT_MESSAGE:
+                        textAlarmMessage.append(currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date()) + ": " + CONTACT_MESSAGE + "\n");
+
+                        if (spinnerMod.getSelectedItem().toString().equals(C.ACCESA_MOV)) {
+                            //comparire l’opportuna UI per regolare il meccanismo
+                            showUIContact();
+                        } else if (spinnerMod.getSelectedItem().toString().equals(C.SPENTA_PARC)) {
+                            Log.i("dd", "1");
+                            showContactLocation();
+                            Log.i("dd", "2");
+                            //se in C è specificata una modalità “notifica”, allora mando una mail
+                            Switch switchNotifica = (Switch) findViewById(R.id.switchNotifica);
+                            Log.i("dd", "3");
+                            if (switchNotifica.isChecked()) {
+                                Log.i("dd", "4");
+                                EditText emailText = (EditText) findViewById(R.id.editEmail);
+                                Log.i("dd", "5");
+                                if (!emailText.getText().equals("")) {
+                                    Log.i("dd", "6");
+                                    CharSequence text = C.MAIL_SENDED;
+                                    int duration = Toast.LENGTH_SHORT;
+                                    Toast.makeText(context.get(), text, duration).show();
+                                    Log.i("dd", "7");
+                                }
+                            }
+                            break;
+                        }
+                    default:
+                        if (spinnerMod.getSelectedItem().toString().equals(C.ACCESA_MOV)) {
+                            if (message.contains(C.PRESENCE_MESSAGE)) {
+                                textAlarmMessage.append(currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date()) + ": " + message + "\n");
+                            }
+                        }
+                        break;
+                }
+            }
+
+            if (obj instanceof JSONObject) {
+                //TODO
+            }
+        }
+    }
+
+    /*private void sendMail() {
+        try {
+            String fromUsername = C.FROM_USERNAME;
+            String fromPassword = C.FROM_PASSWORD;
+            EditText toUsername = (EditText) findViewById(R.id.editEmail);
+            List<String> toAddress = new ArrayList<>(Arrays.asList(new String[]{toUsername.getText().toString()}));
+            String mailSubject = C.MAIL_SUBJECT;
+            String mailBody = C.BODY_MAIL;
+            GmailEmail email = new GmailEmail(mailSubject, mailBody, toAddress);
+            GmailClient client = new GmailClient(fromUsername, fromPassword);
+            Log.d("emailsend", "4");
+            client.sendEmail(email);
+            Log.d("emailsend", "5");
+        } catch (UnsupportedEncodingException | MessagingException e) {
+            Log.d("emailsend", "6");
+            e.printStackTrace();
+        }
+    }*/
 }
