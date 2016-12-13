@@ -16,5 +16,7 @@ class MySwitchOnClickListener implements CompoundButton.OnCheckedChangeListener{
         } else {
             activity.hideMailUI();
         }
+
+        activity.showContactLocation();
     }
 }
