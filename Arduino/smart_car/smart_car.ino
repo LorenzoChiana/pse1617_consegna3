@@ -27,11 +27,11 @@ void setup() {
   sched.init(CLOCK);
 
   Task* controllerTask = new ControllerTask(env);
-  controllerTask->init(CLOCK);
+  controllerTask->init(3*CLOCK);
   sched.addTask(controllerTask);
 
   Task* distanceTask = new DistanceTask(ECHO_PIN, TRIG_PIN, env);
-  distanceTask->init(3*CLOCK);
+  distanceTask->init(CLOCK);
   sched.addTask(distanceTask);
 
   Task* pressionTask = new PressionTask(T1_PIN, SERVO_PIN, env);
@@ -39,7 +39,7 @@ void setup() {
   sched.addTask(pressionTask);
  
   Task* ledTask = new LedTask(L1_PIN, L2_PIN, env);
-  ledTask->init(CLOCK);
+  ledTask->init(2*CLOCK);
   sched.addTask(ledTask); 
 }
 

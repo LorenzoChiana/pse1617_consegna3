@@ -27,8 +27,10 @@ void DistanceTask::tick(){
 		case MOVEMENT:{
 			//Rileva la distanza		
 			currentDistance = proximitySensor->getDistance();
-			Serial.print("Diastanza corrente : "); Serial.print(currentDistance);
-			Serial.print("  Maggiore di DMAX? "); Serial.println(currentDistance>DMAX);
+			#ifdef debug
+				Serial.print("Diastanza corrente : "); Serial.print(currentDistance);
+				Serial.print("  Maggiore di DMAX? "); Serial.println(currentDistance>DMAX);
+			#endif
 			env->setDistance(currentDistance);
 
 			#ifdef debug
