@@ -8,31 +8,32 @@ import com.example.brenno.pse1617_consegna3.bt.BluetoothConnectionManager;
 import com.example.brenno.pse1617_consegna3.bt.MsgTooBigException;
 
 class MySpinnerOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
-    private MainActivity activity;
+    private MainActivity context;
+    private String state;
 
-    MySpinnerOnItemSelectedListener(MainActivity activity) {
-        this.activity = activity;
+    MySpinnerOnItemSelectedListener(MainActivity context) {
+        this.context = context;
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-        Log.d("SpinnerSelection", activity.getArraySpinner()[position]);
+        Log.d("SpinnerSelection", context.getArraySpinner()[position]);
         try {
-            BluetoothConnectionManager.getInstance().sendMsg(activity.getArraySpinner()[position]);
-            Log.d("Bt_sent", activity.getArraySpinner()[position]);
+            BluetoothConnectionManager.getInstance().sendMsg(context.getArraySpinner()[position]);
+            Log.d("Bt_sent", context.getArraySpinner()[position]);
         } catch (MsgTooBigException e) {
             e.printStackTrace();
         }
-        switch (activity.getArraySpinner()[position]) {
+        switch (context.getArraySpinner()[position]) {
             case C.ACCESA_MOV:
-                activity.hideContactLocation();
+                context.hideContactLocation();
                 break;
             case C.SPENTA_NON_PARC:
-                activity.hideUIContact();
-                activity.hideContactLocation();
+                context.hideUIContact();
+                context.hideContactLocation();
                 break;
             case C.SPENTA_PARC:
-                activity.hideUIContact();
+                context.hideUIContact();
                 break;
         }
     }

@@ -3,13 +3,14 @@ package com.example.brenno.pse1617_consegna3.bt;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.os.AsyncTask;
+import android.widget.Spinner;
 import android.widget.TextView;
-
-import java.io.IOException;
-import java.util.UUID;
 
 import com.example.brenno.pse1617_consegna3.MainActivity;
 import com.example.brenno.pse1617_consegna3.R;
+
+import java.io.IOException;
+import java.util.UUID;
 
 public class BluetoothConnectionTask extends AsyncTask<Void, Void, Boolean> {
 
@@ -52,9 +53,15 @@ public class BluetoothConnectionTask extends AsyncTask<Void, Void, Boolean> {
     @Override
     protected void onPostExecute(Boolean connected) {
         TextView flagLabel = (TextView) context.findViewById(R.id.btConnectedFlagLabel);
+        Spinner spinner = (Spinner) context.findViewById(R.id.spinnerMod);
 
         if(connected) {
             flagLabel.setText("Target BT Status: Connected");
+            try {
+                BluetoothConnectionManager.getInstance().sendMsg(String.valueOf(spinner.getSelectedItem()));
+            } catch (MsgTooBigException e) {
+                e.printStackTrace();
+            }
         } else {
             flagLabel.setText("Target BT Status: Not Connected");
         }
