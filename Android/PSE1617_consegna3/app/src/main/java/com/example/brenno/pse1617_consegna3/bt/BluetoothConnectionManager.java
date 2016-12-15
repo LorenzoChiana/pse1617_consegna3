@@ -4,14 +4,14 @@ import android.bluetooth.BluetoothSocket;
 import android.os.Message;
 import android.util.Log;
 
+import com.example.brenno.pse1617_consegna3.C;
+import com.example.brenno.pse1617_consegna3.MainActivity;
+
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
-import com.example.brenno.pse1617_consegna3.C;
-import com.example.brenno.pse1617_consegna3.MainActivity;
 
 public class BluetoothConnectionManager extends Thread {
     private BluetoothSocket btSocket;
@@ -94,13 +94,37 @@ public class BluetoothConnectionManager extends Thread {
     }
 
     public void cancel() {
-        try {
-            btSocket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        /*
+           metodo per rilasciare i vari stream
+           per risolvere il problema del crash
+           dell'app quando viene messa in stop
+           preso da stackoverflow
+         */
+        resetConnection();
     }
 
+    /**
+     * Reset input and output streams and make sure socket is closed.
+     * This method will be used during shutdown() to ensure that the connection is properly closed during a shutdown.
+     * @return
+     */
+    private void resetConnection() {
+        if (btInStream != null) {
+            try {btInStream.close();} catch (Exception e) {}
+            btInStream = null;
+        }
+
+        if (btOutStream != null) {
+            try {btOutStream.close();} catch (Exception e) {}
+            btOutStream = null;
+        }
+
+        if (btSocket != null) {
+            try {btSocket.close();} catch (Exception e) {}
+            btSocket = null;
+        }
+
+    }
     private void dispatchMsg(String msg){
         Message m = new Message();
         m.obj = msg;

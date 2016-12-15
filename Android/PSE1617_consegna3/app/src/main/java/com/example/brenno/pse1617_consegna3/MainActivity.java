@@ -29,6 +29,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.brenno.pse1617_consegna3.bt.BluetoothConnectionManager;
 import com.example.brenno.pse1617_consegna3.bt.BluetoothConnectionTask;
 import com.example.brenno.pse1617_consegna3.bt.BluetoothUtils;
 
@@ -116,7 +117,7 @@ public class MainActivity extends Activity {
     protected void onStop() {
         super.onStop();
 
-        //BluetoothConnectionManager.getInstance().cancel();
+        BluetoothConnectionManager.getInstance().cancel();
     }
 
     @Override
