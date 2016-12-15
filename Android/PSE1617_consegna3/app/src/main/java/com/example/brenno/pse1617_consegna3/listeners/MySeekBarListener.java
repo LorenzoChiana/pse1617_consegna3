@@ -1,4 +1,4 @@
-package com.example.brenno.pse1617_consegna3;
+package com.example.brenno.pse1617_consegna3.listeners;
 
 import android.util.Log;
 import android.widget.SeekBar;
@@ -6,7 +6,7 @@ import android.widget.SeekBar;
 import com.example.brenno.pse1617_consegna3.bt.BluetoothConnectionManager;
 import com.example.brenno.pse1617_consegna3.bt.MsgTooBigException;
 
-class MySeekBarListener implements SeekBar.OnSeekBarChangeListener {
+public class MySeekBarListener implements SeekBar.OnSeekBarChangeListener {
     private int progress;
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {

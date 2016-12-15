@@ -32,6 +32,10 @@ import android.widget.Toast;
 import com.example.brenno.pse1617_consegna3.bt.BluetoothConnectionManager;
 import com.example.brenno.pse1617_consegna3.bt.BluetoothConnectionTask;
 import com.example.brenno.pse1617_consegna3.bt.BluetoothUtils;
+import com.example.brenno.pse1617_consegna3.listeners.MyButtonEndSeekListener;
+import com.example.brenno.pse1617_consegna3.listeners.MySeekBarListener;
+import com.example.brenno.pse1617_consegna3.listeners.MySpinnerOnItemSelectedListener;
+import com.example.brenno.pse1617_consegna3.listeners.MySwitchOnClickListener;
 
 import org.json.JSONObject;
 
@@ -60,7 +64,7 @@ public class MainActivity extends Activity {
     public enum State {MOVEMENT, PARK, OFF};
     private State currentState;
 
-    protected void setState(State value){
+    public void setState(State value){
         this.currentState = value;
     }
 
@@ -103,9 +107,7 @@ public class MainActivity extends Activity {
 
         int permission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
 
-        if (permission == PackageManager.PERMISSION_GRANTED) {
-            //requestLocationUpdates();
-        } else {
+        if (permission != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     ACCESS_FINE_LOCATION_REQUEST);
@@ -144,9 +146,7 @@ public class MainActivity extends Activity {
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case ACCESS_FINE_LOCATION_REQUEST:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    //requestLocationUpdates();
-                } else {
+                if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                     Log.d("PSE-APP", "Permission denied!");
                 }
                 break;
@@ -174,7 +174,7 @@ public class MainActivity extends Activity {
         }
     }
 
-    void hideUIContact() {
+    public void hideUIContact() {
         TextView textMechanism = (TextView) findViewById(R.id.textMeccanismo);
         textMechanism.setVisibility(View.GONE);
 
@@ -189,7 +189,7 @@ public class MainActivity extends Activity {
         buttonMechanism.setVisibility(View.GONE);
     }
 
-    void showUIContact() {
+    public void showUIContact() {
         TextView textMechanism = (TextView) findViewById(R.id.textMeccanismo);
         textMechanism.setVisibility(View.VISIBLE);
         SeekBar seekBar = (SeekBar) findViewById(R.id.seekBar);
@@ -202,7 +202,6 @@ public class MainActivity extends Activity {
     private void initUI() {
         Switch notifica = (Switch) findViewById(R.id.switchNotifica);
         notifica.setOnCheckedChangeListener(new MySwitchOnClickListener(this));
-        hideMailUI();
         this.arraySpinner = new String[]{
                 SPENTA_NON_PARC, C.SPENTA_PARC, C.ACCESA_MOV
         };
@@ -222,20 +221,6 @@ public class MainActivity extends Activity {
         buttonMeccanismo.setOnClickListener(new MyButtonEndSeekListener(this));
 
 
-    }
-
-    void hideMailUI() {
-        TextView label = (TextView) findViewById(R.id.textEmail);
-        label.setVisibility(View.INVISIBLE);
-        EditText edit = (EditText) findViewById(R.id.editEmail);
-        edit.setVisibility(View.INVISIBLE);
-    }
-
-    void showMailUI() {
-        TextView label = (TextView) findViewById(R.id.textEmail);
-        label.setVisibility(View.VISIBLE);
-        EditText edit = (EditText) findViewById(R.id.editEmail);
-        edit.setVisibility(View.VISIBLE);
     }
 
     private void showBluetoothUnavailableAlert() {
@@ -269,9 +254,7 @@ public class MainActivity extends Activity {
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         int permission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
 
-        if (permission == PackageManager.PERMISSION_GRANTED) {
-
-        } else {
+        if (permission != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     ACCESS_FINE_LOCATION_REQUEST);
@@ -282,7 +265,7 @@ public class MainActivity extends Activity {
         textContatto.setVisibility(View.VISIBLE);
     }
 
-    void hideContactLocation() {
+    public void hideContactLocation() {
         TextView textContatto = (TextView) findViewById(R.id.textContatto);
         textContatto.setVisibility(View.GONE);
     }
@@ -294,7 +277,7 @@ public class MainActivity extends Activity {
     public class MainActivityHandler extends Handler {
         private final WeakReference<MainActivity> context;
 
-        public MainActivityHandler(WeakReference<MainActivity> context) {
+        MainActivityHandler(WeakReference<MainActivity> context) {
             this.context = context;
         }
 
@@ -319,17 +302,15 @@ public class MainActivity extends Activity {
                             //se in C è specificata una modalità “notifica”, allora mando una mail
                             Switch switchNotifica = (Switch) findViewById(R.id.switchNotifica);
                             if (switchNotifica.isChecked()) {
-                                EditText emailText = (EditText) findViewById(R.id.editEmail);
-                                if (!emailText.getText().equals("")) {
                                     Thread thread = new Thread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            //mando messaggio "fine" ad arduino
+                                            //invio email
                                             sendMail();
                                             runOnUiThread(new Runnable() {
                                                 @Override
                                                 public void run() {
-                                                    CharSequence text = C.MAIL_SENDED;
+                                                    CharSequence text = C.MAIL_SENT;
                                                     int duration = Toast.LENGTH_SHORT;
                                                     Toast.makeText(context.get(), text, duration).show();
                                                 }
@@ -339,8 +320,6 @@ public class MainActivity extends Activity {
                                     });
 
                                     thread.start();
-
-                                }
                             }
                             break;
                         }

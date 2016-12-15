@@ -1,17 +1,19 @@
-package com.example.brenno.pse1617_consegna3;
+package com.example.brenno.pse1617_consegna3.listeners;
 
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 
+import com.example.brenno.pse1617_consegna3.C;
+import com.example.brenno.pse1617_consegna3.MainActivity;
 import com.example.brenno.pse1617_consegna3.bt.BluetoothConnectionManager;
 import com.example.brenno.pse1617_consegna3.bt.MsgTooBigException;
 
-class MySpinnerOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
+public class MySpinnerOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
     private MainActivity context;
     private String state;
 
-    MySpinnerOnItemSelectedListener(MainActivity context) {
+    public MySpinnerOnItemSelectedListener(MainActivity context) {
         this.context = context;
     }
 

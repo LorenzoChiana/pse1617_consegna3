@@ -1,15 +1,17 @@
-package com.example.brenno.pse1617_consegna3;
+package com.example.brenno.pse1617_consegna3.listeners;
 
 import android.util.Log;
 import android.view.View;
 
+import com.example.brenno.pse1617_consegna3.C;
+import com.example.brenno.pse1617_consegna3.MainActivity;
 import com.example.brenno.pse1617_consegna3.bt.BluetoothConnectionManager;
 import com.example.brenno.pse1617_consegna3.bt.MsgTooBigException;
 
-class MyButtonEndSeekListener implements View.OnClickListener {
+public class MyButtonEndSeekListener implements View.OnClickListener {
     private MainActivity context;
 
-    MyButtonEndSeekListener(MainActivity activity) {
+    public MyButtonEndSeekListener(MainActivity activity) {
         context = activity;
     }
 
