@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -17,6 +18,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
@@ -32,6 +36,8 @@ import android.widget.Toast;
 import com.example.brenno.pse1617_consegna3.bt.BluetoothConnectionManager;
 import com.example.brenno.pse1617_consegna3.bt.BluetoothConnectionTask;
 import com.example.brenno.pse1617_consegna3.bt.BluetoothUtils;
+import com.example.brenno.pse1617_consegna3.email.GmailClient;
+import com.example.brenno.pse1617_consegna3.email.GmailEmail;
 import com.example.brenno.pse1617_consegna3.listeners.MyButtonEndSeekListener;
 import com.example.brenno.pse1617_consegna3.listeners.MySeekBarListener;
 import com.example.brenno.pse1617_consegna3.listeners.MySpinnerOnItemSelectedListener;
@@ -213,14 +219,42 @@ public class MainActivity extends Activity {
 
         TextView textAlarmMessage = (TextView) findViewById(R.id.textAlarmMessage);
         textAlarmMessage.setMovementMethod(new ScrollingMovementMethod());
+
         hideContactLocation();
         hideUIContact();
+
         SeekBar seekBar = (SeekBar) findViewById(R.id.seekBar);
         seekBar.setOnSeekBarChangeListener(new MySeekBarListener());
+
         Button buttonMeccanismo = (Button) findViewById(R.id.buttonMeccanismo);
         buttonMeccanismo.setOnClickListener(new MyButtonEndSeekListener(this));
 
+        final EditText mail = (EditText) findViewById(R.id.editEmail);
+        mail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Log.i("addTextChangedListener", "is valid?" + isValidEmail(charSequence));
+                if (isValidEmail(charSequence)) {
+                    mail.setTextColor(Color.GREEN);
+                } else {
+                    mail.setTextColor(Color.RED);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+
+    private boolean isValidEmail(CharSequence target) {
+        return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
 
     private void showBluetoothUnavailableAlert() {
@@ -305,17 +339,27 @@ public class MainActivity extends Activity {
                                     Thread thread = new Thread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            //invio email
-                                            sendMail();
-                                            runOnUiThread(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    CharSequence text = C.MAIL_SENT;
-                                                    int duration = Toast.LENGTH_SHORT;
-                                                    Toast.makeText(context.get(), text, duration).show();
-                                                }
-                                            });
-
+                                            if(isValidEmail(((EditText) findViewById(R.id.editEmail)).getText())) {
+                                                //invio email
+                                                sendMail();
+                                                runOnUiThread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        CharSequence text = C.MAIL_SENT;
+                                                        int duration = Toast.LENGTH_SHORT;
+                                                        Toast.makeText(context.get(), text, duration).show();
+                                                    }
+                                                });
+                                            } else {
+                                                runOnUiThread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        CharSequence text = C.EMAIL_ERROR;
+                                                        int duration = Toast.LENGTH_SHORT;
+                                                        Toast.makeText(context.get(), text, duration).show();
+                                                    }
+                                                });
+                                            }
                                         }
                                     });
 

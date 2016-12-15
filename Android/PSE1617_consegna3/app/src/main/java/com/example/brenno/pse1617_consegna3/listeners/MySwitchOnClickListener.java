@@ -1,12 +1,9 @@
 package com.example.brenno.pse1617_consegna3.listeners;
 
-import android.text.TextUtils;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
-import android.widget.Toast;
 
-import com.example.brenno.pse1617_consegna3.C;
 import com.example.brenno.pse1617_consegna3.MainActivity;
 import com.example.brenno.pse1617_consegna3.R;
 
@@ -24,9 +21,9 @@ public class MySwitchOnClickListener implements CompoundButton.OnCheckedChangeLi
         if(on){
             email.setEnabled(true);
         } else {
-            if (isValidEmail(email.getText())) {
+            //if (isValidEmail(email.getText())) {
                 email.setEnabled(false);
-            }
+           /* }
             else {
                 context.runOnUiThread(new Runnable() {
                     @Override
@@ -37,11 +34,7 @@ public class MySwitchOnClickListener implements CompoundButton.OnCheckedChangeLi
                     }
                 });
                 simpleSwitch.setChecked(true);
-            }
+            }*/
         }
-    }
-
-    private boolean isValidEmail(CharSequence target) {
-        return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
 }

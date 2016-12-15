@@ -1,4 +1,4 @@
-package com.example.brenno.pse1617_consegna3;
+package com.example.brenno.pse1617_consegna3.email;
 
 import java.util.List;
 
