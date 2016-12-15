@@ -26,14 +26,6 @@ class MySeekBarListener implements SeekBar.OnSeekBarChangeListener {
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
-        /*Log.d("seek", "Progress is: " + progress);
-        //mando in tempo reale i valori di cambiamento della seekbar ad arduino
-        try {
-            BluetoothConnectionManager.getInstance().sendMsg(String.valueOf(progress));
-            Log.d("Bt_sent", String.valueOf(progress));
-        } catch (MsgTooBigException e) {
-            e.printStackTrace();
-        }*/
         this.progress = progress;
     }
 }

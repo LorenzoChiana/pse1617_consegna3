@@ -26,13 +26,16 @@ class MySpinnerOnItemSelectedListener implements AdapterView.OnItemSelectedListe
         }
         switch (context.getArraySpinner()[position]) {
             case C.ACCESA_MOV:
+                context.setState(MainActivity.State.MOVEMENT);
                 context.hideContactLocation();
                 break;
             case C.SPENTA_NON_PARC:
+                context.setState(MainActivity.State.OFF);
                 context.hideUIContact();
                 context.hideContactLocation();
                 break;
             case C.SPENTA_PARC:
+                context.setState(MainActivity.State.PARK);
                 context.hideUIContact();
                 break;
         }

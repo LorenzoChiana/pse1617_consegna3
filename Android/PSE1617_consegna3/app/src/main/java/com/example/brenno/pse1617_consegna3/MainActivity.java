@@ -46,6 +46,7 @@ import java.util.UUID;
 import javax.mail.MessagingException;
 
 import static com.example.brenno.pse1617_consegna3.C.CONTACT_MESSAGE;
+import static com.example.brenno.pse1617_consegna3.C.SPENTA_NON_PARC;
 
 public class MainActivity extends Activity {
     private static final int ACCESS_FINE_LOCATION_REQUEST = 1234;
@@ -55,6 +56,16 @@ public class MainActivity extends Activity {
     private BluetoothDevice targetDevice;
     private LocationManager lm;
     private static MainActivityHandler uiHandler;
+    public enum State {MOVEMENT, PARK, OFF};
+    private State currentState;
+
+    protected void setState(State value){
+        this.currentState = value;
+    }
+
+    protected State getState(){
+        return this.currentState;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +75,7 @@ public class MainActivity extends Activity {
         initUI();
         uiHandler = new MainActivityHandler(new WeakReference<>(this));
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        setState(State.OFF);
     }
 
     @Override
@@ -191,7 +203,7 @@ public class MainActivity extends Activity {
         notifica.setOnCheckedChangeListener(new MySwitchOnClickListener(this));
         hideMailUI();
         this.arraySpinner = new String[]{
-                C.SPENTA_NON_PARC, C.SPENTA_PARC, C.ACCESA_MOV
+                SPENTA_NON_PARC, C.SPENTA_PARC, C.ACCESA_MOV
         };
 
         final Spinner spinner = (Spinner) findViewById(R.id.spinnerMod);
@@ -292,17 +304,16 @@ public class MainActivity extends Activity {
             if (obj instanceof String) {
                 String message = obj.toString();
                 TextView textAlarmMessage = (TextView) findViewById(R.id.textAlarmMessage);
-                Spinner spinnerMod = (Spinner) findViewById(R.id.spinnerMod);
                 Log.d("RecivedMsg", message);
                 switch (message) {
 
                     case CONTACT_MESSAGE:
                         textAlarmMessage.append(DateFormat.getDateTimeInstance().format(new Date()) + ": " + CONTACT_MESSAGE + "\n");
 
-                        if (spinnerMod.getSelectedItem().toString().equals(C.ACCESA_MOV)) {
+                        if (context.get().getState().equals(State.MOVEMENT)) {
                             //comparire l’opportuna UI per regolare il meccanismo
                             showUIContact();
-                        } else if (spinnerMod.getSelectedItem().toString().equals(C.SPENTA_PARC)) {
+                        } else if (context.get().getState().equals(State.PARK)) {
                             showContactLocation();
                             //se in C è specificata una modalità “notifica”, allora mando una mail
                             Switch switchNotifica = (Switch) findViewById(R.id.switchNotifica);
@@ -333,7 +344,7 @@ public class MainActivity extends Activity {
                             break;
                         }
                     default:
-                        if (spinnerMod.getSelectedItem().toString().equals(C.ACCESA_MOV)) {
+                        if (context.get().getState().equals(State.MOVEMENT)) {
                             if (message.contains(C.PRESENCE_MESSAGE)) {
                                 textAlarmMessage.append(DateFormat.getDateTimeInstance().format(new Date()) + ": " + message + "\n");
                             }
