@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -55,7 +54,6 @@ public class MainActivity extends Activity {
     private BluetoothAdapter btAdapter;
     private BluetoothDevice targetDevice;
     private LocationManager lm;
-    private LocationListener locationListener;
     private static MainActivityHandler uiHandler;
 
     @Override
@@ -66,7 +64,6 @@ public class MainActivity extends Activity {
         initUI();
         uiHandler = new MainActivityHandler(new WeakReference<>(this));
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        locationListener = new MyLocationListener();
     }
 
     @Override
@@ -94,7 +91,7 @@ public class MainActivity extends Activity {
         int permission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
 
         if (permission == PackageManager.PERMISSION_GRANTED) {
-            requestLocationUpdates();
+            //requestLocationUpdates();
         } else {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
@@ -135,7 +132,7 @@ public class MainActivity extends Activity {
         switch (requestCode) {
             case ACCESS_FINE_LOCATION_REQUEST:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    requestLocationUpdates();
+                    //requestLocationUpdates();
                 } else {
                     Log.d("PSE-APP", "Permission denied!");
                 }
@@ -145,10 +142,6 @@ public class MainActivity extends Activity {
 
     public String[] getArraySpinner() {
         return arraySpinner;
-    }
-
-    private void requestLocationUpdates() throws SecurityException {
-        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
     }
 
     @Override
@@ -264,7 +257,7 @@ public class MainActivity extends Activity {
         int permission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
 
         if (permission == PackageManager.PERMISSION_GRANTED) {
-            requestLocationUpdates();
+
         } else {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
@@ -287,7 +280,6 @@ public class MainActivity extends Activity {
 
     public class MainActivityHandler extends Handler {
         private final WeakReference<MainActivity> context;
-        private String currentDateTimeString;
 
         public MainActivityHandler(WeakReference<MainActivity> context) {
             this.context = context;
@@ -305,7 +297,7 @@ public class MainActivity extends Activity {
                 switch (message) {
 
                     case CONTACT_MESSAGE:
-                        textAlarmMessage.append(currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date()) + ": " + CONTACT_MESSAGE + "\n");
+                        textAlarmMessage.append(DateFormat.getDateTimeInstance().format(new Date()) + ": " + CONTACT_MESSAGE + "\n");
 
                         if (spinnerMod.getSelectedItem().toString().equals(C.ACCESA_MOV)) {
                             //comparire l’opportuna UI per regolare il meccanismo
@@ -343,7 +335,7 @@ public class MainActivity extends Activity {
                     default:
                         if (spinnerMod.getSelectedItem().toString().equals(C.ACCESA_MOV)) {
                             if (message.contains(C.PRESENCE_MESSAGE)) {
-                                textAlarmMessage.append(currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date()) + ": " + message + "\n");
+                                textAlarmMessage.append(DateFormat.getDateTimeInstance().format(new Date()) + ": " + message + "\n");
                             }
                         }
                         break;

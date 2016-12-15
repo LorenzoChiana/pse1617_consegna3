@@ -7,10 +7,10 @@ import com.example.brenno.pse1617_consegna3.bt.BluetoothConnectionManager;
 import com.example.brenno.pse1617_consegna3.bt.MsgTooBigException;
 
 class MyButtonEndSeekListener implements View.OnClickListener {
-    private MainActivity activity;
+    private MainActivity context;
 
     MyButtonEndSeekListener(MainActivity activity) {
-        this.activity = activity;
+        context = activity;
     }
 
     @Override
@@ -25,10 +25,10 @@ class MyButtonEndSeekListener implements View.OnClickListener {
                 } catch (MsgTooBigException e) {
                     e.printStackTrace();
                 }
-                activity.runOnUiThread(new Runnable() {
+                context.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        activity.hideUIContact();
+                        context.hideUIContact();
                     }
                 });
 

@@ -3,18 +3,18 @@ package com.example.brenno.pse1617_consegna3;
 import android.widget.CompoundButton;
 
 class MySwitchOnClickListener implements CompoundButton.OnCheckedChangeListener{
-    private MainActivity activity;
+    private MainActivity context;
 
     MySwitchOnClickListener(MainActivity activity) {
-        this.activity = activity;
+        context = activity;
     }
 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
         if(b){
-            activity.showMailUI();
+            context.showMailUI();
         } else {
-            activity.hideMailUI();
+            context.hideMailUI();
         }
     }
 }

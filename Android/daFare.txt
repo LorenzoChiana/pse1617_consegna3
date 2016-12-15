@@ -1,2 +1,3 @@
 eliminare il listener on updateGps
 mettere controllo sulla posizione corrente che se è null non fa nulla (altrimenti crasha)
+cambiare da activity -> context
