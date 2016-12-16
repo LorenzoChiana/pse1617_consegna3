@@ -10,7 +10,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -18,9 +17,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
@@ -67,6 +64,13 @@ public class MainActivity extends Activity {
     private BluetoothDevice targetDevice;
     private LocationManager lm;
     private static MainActivityHandler uiHandler;
+
+    /**
+     * Simula lo stato corrente dell'auto nell'app:
+     * MOVEMENT: in movimento
+     * PARK: spenta in parcheggio
+     * OFF: spenta non in parcheggio
+     */
     public enum State {MOVEMENT, PARK, OFF};
     private State currentState;
 
@@ -83,9 +87,11 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);
+        // inizializzazione UI
         initUI();
         uiHandler = new MainActivityHandler(new WeakReference<>(this));
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        // stato iniziale
         setState(State.OFF);
     }
 
@@ -94,7 +100,7 @@ public class MainActivity extends Activity {
         super.onStart();
 
         btAdapter = BluetoothAdapter.getDefaultAdapter();
-
+        // Permessi per l'uso del bluetooth
         if (btAdapter != null) {
             if (btAdapter.isEnabled()) {
                 targetDevice = BluetoothUtils.findPairedDevice(C.TARGET_BT_DEVICE_NAME, btAdapter);
@@ -110,7 +116,7 @@ public class MainActivity extends Activity {
             showBluetoothUnavailableAlert();
         }
 
-
+        // permessi per il gps
         int permission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
 
         if (permission != PackageManager.PERMISSION_GRANTED) {
@@ -124,7 +130,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onStop() {
         super.onStop();
-
+        // rilascio il bluetooth
         BluetoothConnectionManager.getInstance().cancel();
     }
 
@@ -180,10 +186,12 @@ public class MainActivity extends Activity {
         }
     }
 
+    // l'UI relativa al contatto con l'auto in movimento non viene fatta vedere
     public void hideUIContact() {
         TextView textMechanism = (TextView) findViewById(R.id.textMeccanismo);
         textMechanism.setVisibility(View.GONE);
 
+        // uso la seekbar per il setting del servo
         SeekBar seekBar = (SeekBar) findViewById(R.id.seekBar);
         seekBar.setVisibility(View.GONE);
 
@@ -195,6 +203,7 @@ public class MainActivity extends Activity {
         buttonMechanism.setVisibility(View.GONE);
     }
 
+    // l'UI relativa al contatto con l'auto in movimento viene fatta vedere
     public void showUIContact() {
         TextView textMechanism = (TextView) findViewById(R.id.textMeccanismo);
         textMechanism.setVisibility(View.VISIBLE);
@@ -205,8 +214,10 @@ public class MainActivity extends Activity {
         buttonMechanism.setVisibility(View.VISIBLE);
     }
 
+    // inizializzazione dell'UI
     private void initUI() {
         Switch notifica = (Switch) findViewById(R.id.switchNotifica);
+        //inizializzazione dello spinner con gli stati che il sistema può avere
         notifica.setOnCheckedChangeListener(new MySwitchOnClickListener(this));
         this.arraySpinner = new String[]{
                 SPENTA_NON_PARC, C.SPENTA_PARC, C.ACCESA_MOV
@@ -220,6 +231,7 @@ public class MainActivity extends Activity {
         TextView textAlarmMessage = (TextView) findViewById(R.id.textAlarmMessage);
         textAlarmMessage.setMovementMethod(new ScrollingMovementMethod());
 
+        // inizialmente le UI relative ai vari contatti nei vari stati non vengono visualizzate
         hideContactLocation();
         hideUIContact();
 
@@ -229,30 +241,9 @@ public class MainActivity extends Activity {
         Button buttonMeccanismo = (Button) findViewById(R.id.buttonMeccanismo);
         buttonMeccanismo.setOnClickListener(new MyButtonEndSeekListener(this));
 
-        final EditText mail = (EditText) findViewById(R.id.editEmail);
-        mail.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                Log.i("addTextChangedListener", "is valid?" + isValidEmail(charSequence));
-                if (isValidEmail(charSequence)) {
-                    mail.setTextColor(Color.GREEN);
-                } else {
-                    mail.setTextColor(Color.RED);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
     }
 
+    // metodo che restituisce se la stringa inserita nel campo email ha una sintassi valida per essere una email
     private boolean isValidEmail(CharSequence target) {
         return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
@@ -280,6 +271,7 @@ public class MainActivity extends Activity {
         task.execute();
     }
 
+    // l'UI relativa alla visualizzazione delle coordinate del contatto viene fatta vedere
     void showContactLocation() {
         //Memorizzo la posizione geografica del contatto su una textView
         TextView textContatto = (TextView) findViewById(R.id.textContatto);
@@ -294,11 +286,13 @@ public class MainActivity extends Activity {
                     ACCESS_FINE_LOCATION_REQUEST);
         }
 
+        // prendo l'ultima posizione conosciuta dal gps
         Location lastKnownLocation = lm.getLastKnownLocation(lp);
         textContatto.setText("Punto di contatto: (" + lastKnownLocation.getLatitude() + "," + lastKnownLocation.getLongitude() + ")");
         textContatto.setVisibility(View.VISIBLE);
     }
 
+    // l'UI relativa alla visualizzazione delle coordinate del contatto non viene fatta vedere
     public void hideContactLocation() {
         TextView textContatto = (TextView) findViewById(R.id.textContatto);
         textContatto.setVisibility(View.GONE);
@@ -323,15 +317,21 @@ public class MainActivity extends Activity {
                 String message = obj.toString();
                 TextView textAlarmMessage = (TextView) findViewById(R.id.textAlarmMessage);
                 Log.d("RecivedMsg", message);
+
+                // a seconda del messaggio ricevuto da arduio:
                 switch (message) {
 
+                    // rilevato contatto
                     case CONTACT_MESSAGE:
+                        // viene fatto vedere nell'UI ora e data del contatto
                         textAlarmMessage.append(DateFormat.getDateTimeInstance().format(new Date()) + ": " + CONTACT_MESSAGE + "\n");
 
+                        // a seconda dello stato corrente faccio l'opportuna azione
                         if (context.get().getState().equals(State.MOVEMENT)) {
-                            //comparire l’opportuna UI per regolare il meccanismo
+                            //comparire l’opportuna UI per regolare il servo
                             showUIContact();
                         } else if (context.get().getState().equals(State.PARK)) {
+                            //compare l'opportuna UI con la posizione del contatto
                             showContactLocation();
                             //se in C è specificata una modalità “notifica”, allora mando una mail
                             Switch switchNotifica = (Switch) findViewById(R.id.switchNotifica);
@@ -339,6 +339,7 @@ public class MainActivity extends Activity {
                                     Thread thread = new Thread(new Runnable() {
                                         @Override
                                         public void run() {
+                                            // se l'email è valida allora la invio
                                             if(isValidEmail(((EditText) findViewById(R.id.editEmail)).getText())) {
                                                 //invio email
                                                 sendMail();
@@ -350,7 +351,9 @@ public class MainActivity extends Activity {
                                                         Toast.makeText(context.get(), text, duration).show();
                                                     }
                                                 });
-                                            } else {
+                                            }
+                                            //altrimenti faccio comparire a video un avviso nel quale segnale che l'email non è valida
+                                            else {
                                                 runOnUiThread(new Runnable() {
                                                     @Override
                                                     public void run() {
@@ -368,10 +371,11 @@ public class MainActivity extends Activity {
                             break;
                         }
                     default:
-                        if (context.get().getState().equals(State.MOVEMENT)) {
-                            if (message.contains(C.PRESENCE_MESSAGE)) {
-                                textAlarmMessage.append(DateFormat.getDateTimeInstance().format(new Date()) + ": " + message + "\n");
-                            }
+                        // se è nello stato di movimento
+                        // e ha ricevuto il messaggio di presenza di un veicolo esterno troppo vicino
+                        // allora viene fatta visualizzare a video la distanza con data e ora
+                        if (context.get().getState().equals(State.MOVEMENT) && message.contains(C.PRESENCE_MESSAGE)) {
+                                textAlarmMessage.append(DateFormat.getDateTimeInstance().format(new Date()) + ": " + message + " m\n");
                         }
                         break;
                 }
@@ -383,6 +387,7 @@ public class MainActivity extends Activity {
         }
     }
 
+    //metodo per l'invio dell'email
      void sendMail() {
         try {
             String fromUsername = C.FROM_USERNAME;

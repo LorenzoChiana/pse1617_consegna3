@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/switchNotifica"
         android:checked="false"
-        android:textColorLink="@color/colorPrimary"
+        android:textColorLink="@color/colorAccent"
         android:textColorHint="@color/colorPrimaryDark" />
 
     <TextView
