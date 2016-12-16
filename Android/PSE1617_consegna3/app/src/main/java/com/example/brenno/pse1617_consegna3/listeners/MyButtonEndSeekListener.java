@@ -8,6 +8,9 @@ import com.example.brenno.pse1617_consegna3.MainActivity;
 import com.example.brenno.pse1617_consegna3.bt.BluetoothConnectionManager;
 import com.example.brenno.pse1617_consegna3.bt.MsgTooBigException;
 
+/**
+ * Listener nel bottone che segna la fine del trasferimento dei dati provenienti dalla seekbar
+ */
 public class MyButtonEndSeekListener implements View.OnClickListener {
     private MainActivity context;
 
