@@ -21,7 +21,7 @@ void DistanceTask::tick(){
 	char* distanceString;
 	switch(currentState){
 		case OFF:{
-			//Non rilevare
+			//Non rilevare nulla
 			break;
 		}
 		case MOVEMENT:{

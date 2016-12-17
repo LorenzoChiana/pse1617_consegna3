@@ -112,7 +112,7 @@ void PressionTask::tick(){
 		}
 	}
 }
-
+//Funzione che regola l'angolo del servo
 void PressionTask::setAngle(int thisAngle){
 	thisAngle = thisAngle>180?180:thisAngle;
 	thisAngle = thisAngle<0?0:thisAngle;
@@ -120,7 +120,7 @@ void PressionTask::setAngle(int thisAngle){
 	int myValue = map(thisAngle, 0, 180, 500, 2200);
 	this->servo->write(myValue);
 }	
-
+//funziona che controlla che una stringa sia un numero 
 bool PressionTask::is_int(char const* p){
     int length = strlen(p);
     for (int i=0;i<length; i++) {
