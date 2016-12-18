@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.pse1617.smartcar.MainActivity"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <TextView
+        android:text="Target BT Device: Not Found"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btFoundFlagLabel" />
+
+    <TextView
+        android:text="Target BT Status: Not Connected"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btConnectedFlagLabel"
+        android:layout_weight="0.17" />
+
+    <Switch
+        android:text="Modalità notifica"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/switchNotifica"
+        android:checked="false"
+        android:textColorLink="@color/colorAccent"
+        android:textColorHint="@color/colorPrimaryDark" />
+
+    <TextView
+        android:text="Inserisci e-mail:"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textEmail" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/editEmail"
+        android:cursorVisible="true"
+        android:enabled="false" />
+
+    <TextView
+        android:text="Modalità auto:"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textModAuto"/>
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinnerMod" />
+
+    <TextView
+        android:text="Messaggi:"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textMessages" />
+
+    <TextView
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:id="@+id/textAlarmMessage"
+        android:visibility="visible"
+        android:background="@android:drawable/editbox_background"
+        android:gravity="bottom" />
+
+    <TextView
+        android:text="Regola meccanismo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textMeccanismo" />
+
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/seekBar"
+        android:max="180" />
+
+    <Button
+        android:text="OK"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonMeccanismo" />
+
+    <TextView
+        android:text="Punto di contatto:"
+        android:layout_width="match_parent"
+        android:layout_height="27dp"
+        android:id="@+id/textContatto" />
+
+
+</LinearLayout>
